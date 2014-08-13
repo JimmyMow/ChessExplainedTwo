@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :games do
+    member { get :review }
+  end
+
   devise_for :users
   root to: "pages#home"
   # The priority is based upon order of creation: first created -> highest priority.
