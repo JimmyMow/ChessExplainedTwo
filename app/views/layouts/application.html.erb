@@ -15,6 +15,16 @@
     <p class="alert"><%= alert %></p>
   <% end %>
 
+  <%= nav_bar fixed: :top, brand: "ChessExplained", responsive: true do %>
+    <%= menu_group pull: :right do %>
+      <% if user_signed_in? %>
+        <%= menu_item "Sign Out", destroy_user_session_url, method: :delete %>
+      <% else %>
+        <%= menu_item "Sign In", new_user_session_url %>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <%= yield %>
 
 </body>
