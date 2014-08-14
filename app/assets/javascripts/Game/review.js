@@ -22,6 +22,24 @@ var sandboxBoardInitialization = function() {
   channel.bind("clear_position", board.clear);
 };
 
+
+var openTokVideoStream = function() {
+  var apiKey = "44827272";
+  var guestCounter = 0;
+  var session = OT.initSession(apiKey, sessionId);
+  session.on("streamCreated", function(event) {
+    $('.video-chat').prepend("<div id='guestPublisher" + guestCounter + "' class='video-stream'></div>");
+    session.subscribe(event.stream, "guestPublisher" + guestCounter, {width: 200, height: 200});
+    guestCounter++;
+  });
+
+  session.connect(token, function(error) {
+    var publisher = OT.initPublisher("youPublisher", {name: userVideoName, width: 200, height: 200});
+    $("#youPublisher").prependTo(".video-chat");
+    session.publish(publisher);
+  });
+};
+
 // Board methods
 var onChange = function(oldPos, newPos) {
   App.dispatcher.trigger('send_position', {

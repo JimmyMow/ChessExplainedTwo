@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# Video Chat
+gem "opentok", "~> 2.2"
+
 # Web Sockets
 gem 'websocket-rails'
 

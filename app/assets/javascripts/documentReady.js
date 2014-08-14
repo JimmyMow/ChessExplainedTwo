@@ -14,6 +14,7 @@ $(document).ready(function() {
   // In review mode
   if (App.config.isReview) {
     sandboxBoardInitialization();
+    openTokVideoStream();
   }
 
   // Root page

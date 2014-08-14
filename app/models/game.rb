@@ -1,4 +1,6 @@
 class Game < ActiveRecord::Base
+  validates :sessionId, presence: true
+
   belongs_to :owner, class_name: "User", foreign_key: 'creator_id'
 
   has_many :moves

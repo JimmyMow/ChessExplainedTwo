@@ -13,6 +13,8 @@ class GamesController < ApplicationController
   end
 
   def review
+    config_opentok
+    @tok_token = @opentok.generate_token @game.sessionId
   end
 
   # GET /games/new
@@ -27,9 +29,11 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    # @game = Game.new(game_params)
     @game = Game.new
     @game.creator_id = current_user.id
+
+    config_opentok
+    @game.sessionId = @opentok.create_session.session_id
 
     respond_to do |format|
       if @game.save
@@ -68,6 +72,13 @@ class GamesController < ApplicationController
   end
 
   private
+    # Opentok Configuration
+    def config_opentok
+      if @opentok.nil?
+        @opentok = OpenTok::OpenTok.new 44827272, 'fb27ffafec7f84cfcd2da58bcf6b3565b204b6d0'
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_game
       @game = Game.find(params[:id])

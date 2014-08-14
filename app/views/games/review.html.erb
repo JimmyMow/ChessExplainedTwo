@@ -23,23 +23,15 @@
   </div>
 
   <div class="video-chat col-sm-3">
-    <ul class="video-boxes">
-      <li class="video"></li>
-      <li class="video"></li>
-    </ul>
+    <div id="youPublisher"></div>
   </div>
 </div>
 
-<style type="text/css">
-  .video {
-    width: 150px;
-    height: 150px;
-    background-color: red;
-    margin: 5px 0;
-    list-style-type: none;
-  }
+<%= content_for :head do %>
+  <script type="text/javascript">
+    var sessionId = "<%= @game.sessionId %>";
+    var token = "<%= @tok_token %>";
+    var userVideoName = "<%= current_user.email if current_user %>";
+  </script>
+<% end %>
 
-  .game-details {
-
-  }
-</style>
