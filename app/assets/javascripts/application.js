@@ -64,9 +64,16 @@ $(document).ready(function() {
     board.position(data['position'])
   });
 
-  $('#sandboxStartBtn').on('click', board.start);
+  channel.bind("start_position", board.start);
+  channel.bind("clear_position", board.clear);
 
-  $('#sandboxClearBtn').on('click', board.clear);
+  $('#sandboxStartBtn').on('click', function(){
+    App.dispatcher.trigger('board.start', {channel_name: App.config.channelName});
+  });
+
+  $('#sandboxClearBtn').on('click', function(){
+    App.dispatcher.trigger('board.clear', {channel_name: App.config.channelName});
+  });
 
 });
 

@@ -1,5 +1,10 @@
 WebsocketRails::EventMap.describe do
   subscribe :send_position, :to => WebsocketGamesController, :with_method => :position_sandbox
+
+  namespace :board do
+    subscribe :start, :to => WebsocketGamesController, :with_method => :start
+    subscribe :clear, :to => WebsocketGamesController, :with_method => :clear
+  end
   # You can use this file to map incoming events to controller actions.
   # One event can be mapped to any number of controller actions. The
   # actions will be executed in the order they were subscribed.
