@@ -1,96 +1,41 @@
 <div class="container">
-  <h1>Game #<%= @game.id %></h1>
+  <ul class="nav nav-tabs col-sm-8" role="tablist">
+    <li class="active"><a href="#review" role="tab" data-toggle="tab">Review Mode</a></li>
+    <li><a href="#sandbox" role="tab" data-toggle="tab">Sandbox Mode</a></li>
+  </ul>
 
-  <div id="board" style="width: 400px"></div>
-  <p>Status: <span id="status"></span></p>
-  <p>FEN: <span id="fen"></span></p>
-  <p>PGN: <span id="pgn"></span></p>
+  <div class="tab-content col-sm-8">
+    <div class="tab-pane fade in active" id="review">
+      <h1>Review</h1>
+      <% @game.moves.each do |move| %>
+        <%= link_to move.notation, "#" %>
+      <% end %>
+    </div>
 
-  <% @game.moves.each do |move| %>
-    <%= link_to move.notation, "#" %>
-  <% end %>
+    <div class="tab-pane fade in" id="sandbox">
+      <div id="sandboxBoard" style="width: 500px"></div>
+      <div class="game-details">
+        <%= link_to "Starting position", "#", class: "btn btn-primary sandbox-game-instruction", id: "sandboxStartBtn" %>
+        <%= link_to "Clear board", "#", class: "btn btn-primary sandbox-game-instruction", id: "sandboxClearBtn" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="video-chat col-sm-4">
+    <ul class="video-boxes">
+      <li class="video"></li>
+      <li class="video"></li>
+    </ul>
+  </div>
 </div>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-var board,
-  game = new Chess(),
-  statusEl = $('#status'),
-  fenEl = $('#fen'),
-  pgnEl = $('#pgn');
-
-// do not pick up pieces if the game is over
-// only pick up pieces for the side to move
-var onDragStart = function(source, piece, position, orientation) {
-  if (game.game_over() === true ||
-      (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-      (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-    return false;
+<style type="text/css">
+  .video {
+    width: 150px;
+    height: 150px;
+    background-color: red;
+    margin: 5px 0;
+    list-style-type: none;
+    display: inline-block;
   }
-};
-
-var onDrop = function(source, target) {
-  // see if the move is legal
-  var move = game.move({
-    from: source,
-    to: target,
-    promotion: 'q' // NOTE: always promote to a queen for example simplicity
-  });
-
-  // illegal move
-  if (move === null) return 'snapback';
-
-  updateStatus();
-};
-
-// update the board position after the piece snap
-// for castling, en passant, pawn promotion
-var onSnapEnd = function() {
-  board.position(game.fen());
-};
-
-var updateStatus = function() {
-  var status = '';
-
-  var moveColor = 'White';
-  if (game.turn() === 'b') {
-    moveColor = 'Black';
-  }
-
-  // checkmate?
-  if (game.in_checkmate() === true) {
-    status = 'Game over, ' + moveColor + ' is in checkmate.';
-  }
-
-  // draw?
-  else if (game.in_draw() === true) {
-    status = 'Game over, drawn position';
-  }
-
-  // game still on
-  else {
-    status = moveColor + ' to move';
-
-    // check?
-    if (game.in_check() === true) {
-      status += ', ' + moveColor + ' is in check';
-    }
-  }
-
-  statusEl.html(status);
-  fenEl.html(game.fen());
-  pgnEl.html(game.pgn());
-};
-
-var cfg = {
-  draggable: true,
-  position: 'start',
-  onDragStart: onDragStart,
-  onDrop: onDrop,
-  onSnapEnd: onSnapEnd
-};
-board = new ChessBoard('board', cfg);
-
-updateStatus();
-});
-</script>
+</style>

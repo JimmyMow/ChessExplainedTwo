@@ -15,7 +15,10 @@
 //= require twitter/bootstrap
 //= require chessboard
 //= require chess
+//= require websocket_rails/main
 //= require_tree .
+
+
 
 $(document).ready(function() {
   $("#new_game").on('submit', function(e) {
@@ -35,4 +38,35 @@ $(document).ready(function() {
     $('#game_moves').val(JSON.stringify(moveObjects));
   });
 
+
+  var onChange = function(oldPos, newPos) {
+    App.dispatcher.trigger('send_position', {
+      fen_position: newPos,
+      channel_name: App.config.channelName
+    });
+  };
+
+  var cfg = {
+    draggable: true,
+    position: 'start',
+    onChange: onChange,
+    sparePieces: true,
+    dropOffBoard: 'trash'
+
+  };
+  var board = new ChessBoard('sandboxBoard', cfg);
+
+  $('#startPositionBtn').on('click', board.start);
+
+  var channel = App.dispatcher.subscribe(App.config.channelName)
+
+  channel.bind("send_move", function(data) {
+    board.position(data['position'])
+  });
+
+  $('#sandboxStartBtn').on('click', board.start);
+
+  $('#sandboxClearBtn').on('click', board.clear);
+
 });
+
