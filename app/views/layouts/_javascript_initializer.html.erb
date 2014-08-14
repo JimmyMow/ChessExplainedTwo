@@ -5,6 +5,7 @@
   if ( window.location.pathname == "/games/<%= params[:id] %>/review"  ) {
     var channelNameVar = "<%= in_words(@game.try(:id) || nil) %>";
   }
+
   App.config = {
     isGame: <%= current_page?(game_url(params[:id] || 1)) %> || <%= current_page?(review_game_url(params[:id] || 1)) %>,
     isReview: <%= current_page?(review_game_url(params[:id] || 1)) %>,

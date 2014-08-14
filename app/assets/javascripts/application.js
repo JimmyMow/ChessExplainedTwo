@@ -16,64 +16,7 @@
 //= require chessboard
 //= require chess
 //= require websocket_rails/main
+//= require documentReady
 //= require_tree .
 
-
-
-$(document).ready(function() {
-  $("#new_game").on('submit', function(e) {
-    var original_pgn = $('#game_moves').val();
-    var chess = new Chess();
-    chess.load_pgn(original_pgn);
-    var parsed_pgn = chess.history();
-    chess.clear();
-
-    var anotherEngine = new Chess();
-    var moveObjects = [];
-    parsed_pgn.forEach(function(item, index) {
-      anotherEngine.move(item);
-      moveObjects.push( {notation: item, fen: anotherEngine.fen()}  );
-    });
-
-    $('#game_moves').val(JSON.stringify(moveObjects));
-  });
-
-
-  var onChange = function(oldPos, newPos) {
-    App.dispatcher.trigger('send_position', {
-      fen_position: newPos,
-      channel_name: App.config.channelName
-    });
-  };
-
-  var cfg = {
-    draggable: true,
-    position: 'start',
-    onChange: onChange,
-    sparePieces: true,
-    dropOffBoard: 'trash'
-
-  };
-  var board = new ChessBoard('sandboxBoard', cfg);
-
-  $('#startPositionBtn').on('click', board.start);
-
-  var channel = App.dispatcher.subscribe(App.config.channelName)
-
-  channel.bind("send_move", function(data) {
-    board.position(data['position'])
-  });
-
-  channel.bind("start_position", board.start);
-  channel.bind("clear_position", board.clear);
-
-  $('#sandboxStartBtn').on('click', function(){
-    App.dispatcher.trigger('board.start', {channel_name: App.config.channelName});
-  });
-
-  $('#sandboxClearBtn').on('click', function(){
-    App.dispatcher.trigger('board.clear', {channel_name: App.config.channelName});
-  });
-
-});
 
