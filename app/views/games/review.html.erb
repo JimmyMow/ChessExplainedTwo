@@ -1,29 +1,68 @@
 <div class="container">
-  <ul class="nav nav-tabs col-sm-9" role="tablist">
+  <ul class="nav nav-tabs col-sm-9 review-nav" role="tablist">
     <li class="active"><a href="#review" role="tab" data-toggle="tab">Review Mode</a></li>
     <li><a href="#sandbox" role="tab" data-toggle="tab">Sandbox Mode</a></li>
   </ul>
 
   <div class="tab-content col-sm-9">
     <div class="tab-pane fade in active" id="review">
-      <h1>Review</h1>
-      <% @game.moves.each do |move| %>
-        <%= link_to move.notation, "#" %>
-      <% end %>
+      <div class="review-details col-sm-3">
+        <!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+          Launch demo modal
+        </button> -->
+        <%= link_to "Launch demo modal", "#", class: "btn btn-primary btn-block", id: "triggerVariation", data: {toggle: "modal", target: "#myModal"} %>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">New Variation</h4>
+              </div>
+              <div class="modal-body text-center">
+                <div id="variationBoard" style="width: 500px"></div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <%= link_to "Flip board", "#", class: "btn btn-default btn-block flip-board", id: "reviewFlipBoard", data: {board: "review"} %>
+        <% @game.moves.each do |move| %>
+          <%= link_to move.notation, "#", class: "review-notation", data: {fen: move.fen} %>
+        <% end %>
+      </div>
+
+      <div id="reviewBoardContainer" class="col-sm-9 text-center">
+        <div id="reviewBoard" style="width: 500px"></div>
+        <section class="review-board-navigator-container">
+          <%= link_to "<i class=\"fa fa-angle-double-left fa-2x\"></i>".html_safe, "#", class: "btn btn-default review-nav-link", id: "reviewMoveBeg" %>
+          <%= link_to "<i class=\"fa fa-angle-left fa-2x\"></i>".html_safe, "#", class: "btn btn-default review-nav-link", id: "reviewMoveBackward" %>
+          <%= link_to "<i class=\"fa fa-angle-right fa-2x\"></i>".html_safe, "#", class: "btn btn-default review-nav-link", id: "reviewMoveForward" %>
+          <%= link_to "<i class=\"fa fa-angle-double-right fa-2x\"></i>".html_safe, "#", class: "btn btn-default review-nav-link", id: "reviewMoveEnd" %>
+        </section>
+      </div>
+
     </div>
 
     <div class="tab-pane fade in" id="sandbox">
       <div class="game-details col-sm-3">
-      <h4 class='text-center'>Board Settings</h4>
         <%= link_to "Starting position", "#", class: "btn btn-default btn-block", id: "sandboxStartBtn" %>
         <%= link_to "Clear board", "#", class: "btn btn-default btn-block", id: "sandboxClearBtn" %>
+        <%= link_to "Flip board", "#", class: "btn btn-default btn-block flip-board", id: "sandboxFlipBoard", data: {board: "sandbox"} %>
       </div>
-      <div id="sandboxBoard" style="width: 500px" class='col-sm-9 col-sm-offset-1'></div>
+      <div id="sandboxBoardContainer" class="col-sm-9">
+        <div id="sandboxBoard" style="width: 500px"></div>
+      </div>
     </div>
   </div>
 
-  <div class="video-chat col-sm-3">
-    <div id="youPublisher"></div>
+  <div class="video-chat text-center col-sm-3">
+    <div id="youPublisher" class='video-box'></div>
   </div>
 </div>
 
@@ -35,3 +74,25 @@
   </script>
 <% end %>
 
+
+<style type="text/css">
+  .video-box {
+    display: inline-block;
+  }
+
+  .review-nav {
+    margin-top: 30px;
+  }
+
+  .review-board-navigator-container {
+    text-align: center;
+  }
+
+  #reviewBoard, #variationBoard {
+    display: inline-block;
+  }
+
+  .review-nav-link {
+    margin: 0 5px;
+  }
+</style>

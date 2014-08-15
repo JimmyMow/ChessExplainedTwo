@@ -1,7 +1,9 @@
 WebsocketRails::EventMap.describe do
-  subscribe :send_position, :to => WebsocketGamesController, :with_method => :position_sandbox
-
   namespace :board do
+    subscribe :position_board, :to => WebsocketGamesController, :with_method => :position_board
+
+    subscribe :trigger_variation, :to => WebsocketGamesController, :with_method => :trigger_variation
+
     subscribe :start, :to => WebsocketGamesController, :with_method => :start
     subscribe :clear, :to => WebsocketGamesController, :with_method => :clear
   end

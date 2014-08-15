@@ -1,1 +1,3 @@
-json.extract! @game, :id, :creator_id, :created_at, :updated_at
+json.array!(@game.moves) do |move|
+  json.extract! move, :id, :notation ,:fen
+end
