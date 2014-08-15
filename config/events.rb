@@ -3,9 +3,14 @@ WebsocketRails::EventMap.describe do
     subscribe :position_board, :to => WebsocketGamesController, :with_method => :position_board
 
     subscribe :trigger_variation, :to => WebsocketGamesController, :with_method => :trigger_variation
+    subscribe :close_variation, :to => WebsocketGamesController, :with_method => :close_variation
+    subscribe :update_variation_game, :to => WebsocketGamesController, :with_method => :update_variation_game
+
 
     subscribe :start, :to => WebsocketGamesController, :with_method => :start
     subscribe :clear, :to => WebsocketGamesController, :with_method => :clear
+
+    subscribe :adjust_move_counter, :to => WebsocketGamesController, :with_method => :adjust_move_counter
   end
   # You can use this file to map incoming events to controller actions.
   # One event can be mapped to any number of controller actions. The

@@ -17,19 +17,16 @@ $(document).ready(function() {
     App.ReviewGame.moveCounter = 0;
     reviewBoardInitialization();
     sandboxBoardInitialization();
-    // variationBoardInitialization();
+    variationBoardInitialization();
     // openTokVideoStream();
     loadGamesMoves();
     initializeBinds();
     initializeDomHandlers();
-    $("#triggerVariation").on('click', function() {
-      App.dispatcher.trigger("board.trigger_variation", {channel_name: App.config.channelName})
-      variationBoard();
-    });
 
     App.ReviewGame.BOARDS = {};
     App.ReviewGame.BOARDS["sandbox"] = sandboxBoard;
     App.ReviewGame.BOARDS["review"] = reviewBoard;
+    App.ReviewGame.BOARDS["variation"] = variationBoard;
   }
 
   // Root page

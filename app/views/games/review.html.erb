@@ -7,23 +7,19 @@
   <div class="tab-content col-sm-9">
     <div class="tab-pane fade in active" id="review">
       <div class="review-details col-sm-3">
-        <!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-          Launch demo modal
-        </button> -->
-        <%= link_to "Launch demo modal", "#", class: "btn btn-primary btn-block", id: "triggerVariation", data: {toggle: "modal", target: "#myModal"} %>
+        <%= link_to "New variation", "#", class: "btn btn-primary btn-block", id: "triggerVariation", data: {toggle: "modal", target: "#myModal"} %>
 
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" id="closeVariation" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="myModalLabel">New Variation</h4>
               </div>
               <div class="modal-body text-center">
                 <div id="variationBoard" style="width: 500px"></div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
               </div>
             </div>

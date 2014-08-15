@@ -23,25 +23,72 @@ var reviewBoardInitialization = function() {
   window.reviewBoard = new ChessBoard('reviewBoard', cfg);
 };
 
-// var variationBoardInitialization = function() {
-//   var cfg = {
-//     draggable: true,
-//     position: 'start',
-//     onDragStart: onDragStart,
-//     onDrop: onDrop,
-//     onMouseoutSquare: onMouseoutSquare,
-//     onMouseoverSquare: onMouseoverSquare,
-//     onSnapEnd: onSnapEnd
-//   };
+var variationBoardInitialization = function() {
+  var cfg = {
+    draggable: true,
+    position: "start",
+    onDragStart: onDragStart,
+    onDrop: onDrop,
+    onMouseoutSquare: onMouseoutSquare,
+    onMouseoverSquare: onMouseoverSquare,
+    onSnapEnd: onSnapEnd
+  };
 
-//   window.variationBoard = new ChessBoard('variationBoard', cfg);
-// };
+  window.variationBoard = new ChessBoard('variationBoard', cfg);
+  window.variationBoard.game = new Chess();
+};
+
+// Initialize Binds
+var initializeBinds = function() {
+  var channel = App.dispatcher.subscribe(App.config.channelName)
+
+  channel.bind("start_position", function(data){
+    App.ReviewGame.BOARDS[data["board"]].start();
+  });
+
+    channel.bind("clear_position", function(data){
+    App.ReviewGame.BOARDS[data["board"]].clear();
+  });
+
+  channel.bind("position_board", function(data) {
+    App.ReviewGame.BOARDS[data["board"]].position(data["position"]);
+  });
+
+  channel.bind("trigger_variation", function(data) {
+    $('#myModal').modal({show:true, keyboard:true, backdrop:true});
+
+    window.variationBoard.position(reviewBoard.fen(), true);
+    window.variationBoard.game = new Chess();
+
+    var moves = App.ReviewGame.moves.slice(0, [App.ReviewGame.moveCounter]);
+    console.log(moves);
+    moves.forEach(function(item, index) {
+      window.variationBoard.game.move(item["notation"]);
+    });
+
+  });
+
+  channel.bind("close_variation", function(data) {
+    $('#myModal').modal('hide');
+  });
+
+  channel.bind("update_variation_game", function(data) {
+    window.variationBoard.game.move(data["pgn"]);
+  });
+
+  channel.bind("adjust_move_counter", function(data) {
+    console.log(data["counter"])
+    App.ReviewGame.moveCounter = parseInt(data["counter"]);
+  });
+};
 
 // Initialize DOM Handlers
 var initializeDomHandlers = function() {
   $("#reviewMoveForward").on("click", function(e) {
     if(App.ReviewGame.moves.length > App.ReviewGame.moveCounter) {
       App.ReviewGame.moveCounter++;
+      adjustMoveCounter(App.ReviewGame.moveCounter);
+
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
     } else if(App.ReviewGame.moves.length < App.ReviewGame.moveCounter) {
       return false;
@@ -53,10 +100,14 @@ var initializeDomHandlers = function() {
   $("#reviewMoveBackward").on("click", function(e) {
     if(App.ReviewGame.moveCounter > 1) {
       App.ReviewGame.moveCounter--;
+      adjustMoveCounter(App.ReviewGame.moveCounter);
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
+
     } else if(App.ReviewGame.moveCounter == 1) {
       App.ReviewGame.moveCounter--;
+      adjustMoveCounter(App.ReviewGame.moveCounter);
       App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName});
+
     } else {
       return false;
     }
@@ -90,34 +141,19 @@ var initializeDomHandlers = function() {
   });
 
   $("#reviewNewVariation").on("click", function(e) {
-    console.log("here");
-
     e.preventDefault();
   });
-};
 
-
-// Initialize Binds
-var initializeBinds = function() {
-  var channel = App.dispatcher.subscribe(App.config.channelName)
-
-  channel.bind("start_position", function(data){
-    App.ReviewGame.BOARDS[data["board"]].start();
+  $("#triggerVariation").on('click', function() {
+    App.dispatcher.trigger("board.trigger_variation", {channel_name: App.config.channelName});
   });
 
-    channel.bind("clear_position", function(data){
-    App.ReviewGame.BOARDS[data["board"]].clear();
-  });
-
-  channel.bind("position_board", function(data) {
-    App.ReviewGame.BOARDS[data["board"]].position(data["position"]);
-  });
-
-  channel.bind("trigger_variation", function(data) {
-    variationBoard();
-    $('#myModal').modal({show:true, keyboard:true, backdrop:true})
+  $("#closeVariation").on('click', function() {
+    App.dispatcher.trigger("board.close_variation", {channel_name: App.config.channelName});
   });
 };
+
+
 
 // Triggers
 var positionBoardTrigger = function(position, board) {
@@ -154,6 +190,9 @@ var loadGamesMoves = function() {
   });
 };
 
+var adjustMoveCounter = function(counter) {
+  App.dispatcher.trigger("board.adjust_move_counter", {counter: counter, channel_name: App.config.channelName})
+};
 
 // Board methods
 var sandboxOnChange = function(oldPos, newPos) {
@@ -179,87 +218,78 @@ var sandboxOnChange = function(oldPos, newPos) {
 
 
 
-var variationBoard = function() {
-
-  var board,
-    game = new Chess();
-
-  var removeGreySquares = function() {
-    $('#board .square-55d63').css('background', '');
-  };
-
-  var greySquare = function(square) {
-    var squareEl = $('#board .square-' + square);
-
-    var background = '#a9a9a9';
-    if (squareEl.hasClass('black-3c85d') === true) {
-      background = '#696969';
-    }
-
-    squareEl.css('background', background);
-  };
-
-  var onDragStart = function(source, piece) {
-    // do not pick up pieces if the game is over
-    // or if it's not that side's turn
-    if (game.game_over() === true ||
-        (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-        (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-      return false;
-    }
-  };
-
-  var onDrop = function(source, target) {
-    removeGreySquares();
-
-    // see if the move is legal
-    var move = game.move({
-      from: source,
-      to: target,
-      promotion: 'q' // NOTE: always promote to a queen for example simplicity
-    });
-
-    // illegal move
-    if (move === null) return 'snapback';
-  };
-
-  var onMouseoverSquare = function(square, piece) {
-    // get list of possible moves for this square
-    var moves = game.moves({
-      square: square,
-      verbose: true
-    });
-
-    // exit if there are no moves available for this square
-    if (moves.length === 0) return;
-
-    // highlight the square they moused over
-    greySquare(square);
-
-    // highlight the possible squares for this piece
-    for (var i = 0; i < moves.length; i++) {
-      greySquare(moves[i].to);
-    }
-  };
-
-  var onMouseoutSquare = function(square, piece) {
-    removeGreySquares();
-  };
-
-  var onSnapEnd = function() {
-    board.position(game.fen());
-  };
-
-  var cfg = {
-    draggable: true,
-    position: window.reviewBoard.fen(),
-    onDragStart: onDragStart,
-    onDrop: onDrop,
-    onMouseoutSquare: onMouseoutSquare,
-    onMouseoverSquare: onMouseoverSquare,
-    onSnapEnd: onSnapEnd
-  };
-  board = new ChessBoard('variationBoard', cfg);
 
 
+var removeGreySquares = function() {
+  $('#board .square-55d63').css('background', '');
 };
+
+var greySquare = function(square) {
+  var squareEl = $('#board .square-' + square);
+
+  var background = '#a9a9a9';
+  if (squareEl.hasClass('black-3c85d') === true) {
+    background = '#696969';
+  }
+
+  squareEl.css('background', background);
+};
+
+var onDragStart = function(source, piece) {
+  // do not pick up pieces if the game is over
+  // or if it's not that side's turn
+  if (window.variationBoard.game.game_over() === true ||
+      (window.variationBoard.game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+      (window.variationBoard.game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+    return false;
+  }
+};
+
+var onDrop = function(source, target) {
+  removeGreySquares();
+
+  // see if the move is legal
+  var move = window.variationBoard.game.move({
+    from: source,
+    to: target,
+    promotion: 'q' // NOTE: always promote to a queen for example simplicity
+  });
+
+  // illegal move
+  if (move === null) return 'snapback';
+};
+
+var onMouseoverSquare = function(square, piece) {
+  // get list of possible moves for this square
+  var moves = window.variationBoard.game.moves({
+    square: square,
+    verbose: true
+  });
+
+  // exit if there are no moves available for this square
+  if (moves.length === 0) return;
+
+  // highlight the square they moused over
+  greySquare(square);
+
+  // highlight the possible squares for this piece
+  for (var i = 0; i < moves.length; i++) {
+    greySquare(moves[i].to);
+  }
+};
+
+var onMouseoutSquare = function(square, piece) {
+  removeGreySquares();
+};
+
+var onSnapEnd = function() {
+  window.variationBoard.position(window.variationBoard.game.fen());
+
+  positionBoardTrigger(window.variationBoard.game.fen(), "variation");
+
+  App.dispatcher.trigger("board.update_variation_game", {
+    channel_name: App.config.channelName,
+    pgn: window.variationBoard.game.history()[window.variationBoard.game.history().length - 1]
+  });
+};
+
