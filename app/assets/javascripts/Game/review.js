@@ -117,13 +117,13 @@ var initializeDomHandlers = function() {
 
   $("#reviewMoveBeg").on('click', function(e) {
     App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName});
-
+    adjustMoveCounter(0);
     e.preventDefault();
   });
 
   $("#reviewMoveEnd").on('click', function(e) {
     positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moves.length - 1]["fen"], "review");
-
+    adjustMoveCounter(App.ReviewGame.moves.length - 1);
     e.preventDefault();
   });
 
@@ -148,7 +148,7 @@ var initializeDomHandlers = function() {
     App.dispatcher.trigger("board.trigger_variation", {channel_name: App.config.channelName});
   });
 
-  $("#closeVariation").on('click', function() {
+  $('#myModal').on('hide.bs.modal', function (e) {
     App.dispatcher.trigger("board.close_variation", {channel_name: App.config.channelName});
   });
 };
