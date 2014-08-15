@@ -77,8 +77,12 @@ var initializeBinds = function() {
   });
 
   channel.bind("adjust_move_counter", function(data) {
-    console.log(data["counter"])
     App.ReviewGame.moveCounter = parseInt(data["counter"]);
+  });
+
+  channel.bind("highlight_pgn", function(data) {
+    $('.review-notation').removeClass("current-move");
+    $('.' + data["pgn"] + '-highlight').addClass("current-move");
   });
 };
 
@@ -90,6 +94,7 @@ var initializeDomHandlers = function() {
       adjustMoveCounter(App.ReviewGame.moveCounter);
 
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
+      highlightPgn(App.ReviewGame.moveCounter - 1);
     } else if(App.ReviewGame.moves.length < App.ReviewGame.moveCounter) {
       return false;
     }
@@ -102,6 +107,7 @@ var initializeDomHandlers = function() {
       App.ReviewGame.moveCounter--;
       adjustMoveCounter(App.ReviewGame.moveCounter);
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
+      highlightPgn(App.ReviewGame.moveCounter - 1);
 
     } else if(App.ReviewGame.moveCounter == 1) {
       App.ReviewGame.moveCounter--;
@@ -118,12 +124,15 @@ var initializeDomHandlers = function() {
   $("#reviewMoveBeg").on('click', function(e) {
     App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName});
     adjustMoveCounter(0);
+    $(".review-notation").removeClass('current-move');
     e.preventDefault();
   });
 
   $("#reviewMoveEnd").on('click', function(e) {
+    App.ReviewGame.moveCounter = App.ReviewGame.moves.length - 1;
     positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moves.length - 1]["fen"], "review");
     adjustMoveCounter(App.ReviewGame.moves.length - 1);
+    highlightPgn(App.ReviewGame.moveCounter);
     e.preventDefault();
   });
 
@@ -148,7 +157,7 @@ var initializeDomHandlers = function() {
     App.dispatcher.trigger("board.trigger_variation", {channel_name: App.config.channelName});
   });
 
-  $('#myModal').on('hide.bs.modal', function (e) {
+  $('#myModal').on('hidden.bs.modal', function (e) {
     App.dispatcher.trigger("board.close_variation", {channel_name: App.config.channelName});
   });
 };
@@ -192,6 +201,10 @@ var loadGamesMoves = function() {
 
 var adjustMoveCounter = function(counter) {
   App.dispatcher.trigger("board.adjust_move_counter", {counter: counter, channel_name: App.config.channelName})
+};
+
+var highlightPgn = function(move){
+  App.dispatcher.trigger('board.highlight_pgn', {channel_name: App.config.channelName, pgn: move});
 };
 
 // Board methods

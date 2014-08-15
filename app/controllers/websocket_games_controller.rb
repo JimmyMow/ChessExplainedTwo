@@ -38,4 +38,10 @@ class WebsocketGamesController < WebsocketRails::BaseController
       counter: message[:counter]
     }
   end
+
+  def highlight_pgn
+    WebsocketRails[message[:channel_name].to_sym].trigger :highlight_pgn, {
+      pgn: message[:pgn]
+    }
+  end
 end
