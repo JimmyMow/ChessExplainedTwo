@@ -1194,7 +1194,8 @@ function updateDraggedPiece(x, y) {
   // put the dragged piece over the mouse cursor
   draggedPieceEl.css({
     left: x - (SQUARE_SIZE / 2),
-    top: y - (SQUARE_SIZE / 2)
+    top: y - (SQUARE_SIZE / 2),
+    zIndex: 10000
   });
 
   // get location
