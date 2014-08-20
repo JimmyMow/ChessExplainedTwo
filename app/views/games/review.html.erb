@@ -28,8 +28,10 @@
 
 
         <%= link_to "Flip board", "#", class: "btn btn-default btn-block flip-board", id: "reviewFlipBoard", data: {board: "review"} %>
+        <%= link_to "Get analysis", analysis_url(game_id: @game.id), method: :post, remote: true, class: "btn btn-default btn-block flip-board", data: {disable_with: "<i class=\"fa fa-spinner fa-spin\"></i> Analyzing..."} %>
+        <div class="analysis"></div>
         <% @game.moves.each_with_index do |move, index| %>
-          <%= link_to move.notation, "#", class: "review-notation #{index}-highlight", data: {fen: move.fen} %>
+          <%= link_to move.notation, "#", class: "review-notation #{index}-highlight", data: {fen: move.fen, index: index} %>
         <% end %>
       </div>
 
@@ -93,6 +95,10 @@
   }
 
   .current-move {
+    color: red;
+  }
+
+  .current-move:hover {
     color: red;
   }
 </style>

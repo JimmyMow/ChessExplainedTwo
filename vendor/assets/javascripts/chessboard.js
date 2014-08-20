@@ -442,7 +442,6 @@ function expandConfig() {
   if (cfg.hasOwnProperty('pieceTheme') !== true ||
       (typeof cfg.pieceTheme !== 'string' &&
        typeof cfg.pieceTheme !== 'function')) {
-    // cfg.pieceTheme = 'img/chesspieces/wikipedia/{piece}.png';
     cfg.pieceTheme = "http://chess-explained.s3.amazonaws.com/{piece}.png";
   }
 

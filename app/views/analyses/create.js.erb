@@ -1,0 +1,3 @@
+<% @game.moves.each do |move| %>
+  $(".analysis").append("<p><%= move.notation %>: <%= move.eval %></p>");
+<% end %>

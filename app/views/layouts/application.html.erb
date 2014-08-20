@@ -17,6 +17,21 @@
   <%= render 'layouts/javascript_initializer' %>
 </head>
 <body>
+  <ul class="nav nav-pills">
+    <li class="<%= 'active' if current_page?(root_url) %>"><%= link_to "Home", root_url %></li>
+    <li class="<%= 'active' if current_page?(new_game_url) %>"><%= link_to "Upload a game", new_game_url %></li>
+
+    <% if user_signed_in? %>
+      <li class="pull-right">
+        <%= link_to "Sign out", destroy_user_session_url, method: :delete %>
+      </li>
+    <% else %>
+      <li class="pull-right">
+        <%= link_to "Sign in", new_user_session_url %>
+      </li>
+    <% end %>
+  </ul>
+
   <% if notice %>
       <div class="alert alert-success alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert">
@@ -36,21 +51,6 @@
       <%= alert %>
     </div>
   <% end %>
-
-  <ul class="nav nav-pills">
-    <li class="<%= 'active' if current_page?(root_url) %>"><%= link_to "Home", root_url %></li>
-    <li class="<%= 'active' if current_page?(new_game_url) %>"><%= link_to "Upload a game", new_game_url %></li>
-
-    <% if user_signed_in? %>
-      <li class="pull-right">
-        <%= link_to "Sign out", destroy_user_session_url, method: :delete %>
-      </li>
-    <% else %>
-      <li class="pull-right">
-        <%= link_to "Sign in", new_user_session_url %>
-      </li>
-    <% end %>
-  </ul>
 
   <%= yield %>
 

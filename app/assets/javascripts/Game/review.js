@@ -139,7 +139,8 @@ var initializeDomHandlers = function() {
   $(".review-notation").on("click", function(e) {
     var move = $(this);
     positionBoardTrigger(move.data("fen"), "review");
-
+    highlightPgn(move.data("index"));
+    adjustMoveCounter(move.data("index") + 1);
     e.preventDefault();
   });
 
