@@ -13,5 +13,4 @@ class Game < ActiveRecord::Base
       move.save
     end
   end
-
 end

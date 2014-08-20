@@ -213,6 +213,12 @@ var sandboxOnChange = function(oldPos, newPos) {
   positionBoardTrigger(newPos, "sandbox");
 };
 
+var styleGameDetailsSandbox = function() {
+  // var margin = $('.spare-pieces-7492f').height();
+  // alert(margin);
+  $('.game-details').css({"margin-top": 62});
+};
+
 
 
 

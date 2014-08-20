@@ -1,7 +1,7 @@
 <div class="container">
   <ul class="nav nav-tabs col-sm-9 review-nav" role="tablist">
-    <li class="active"><a href="#review" role="tab" data-toggle="tab">Review Mode</a></li>
-    <li><a href="#sandbox" role="tab" data-toggle="tab">Sandbox Mode</a></li>
+    <li class="active"><a href="#review" role="tab" data-toggle="tab">Review</a></li>
+    <li><a href="#sandbox" role="tab" data-toggle="tab">Sandbox</a></li>
   </ul>
 
   <div class="tab-content col-sm-9">
@@ -28,9 +28,13 @@
 
 
         <%= link_to "Flip board", "#", class: "btn btn-default btn-block flip-board", id: "reviewFlipBoard", data: {board: "review"} %>
-        <%= link_to "Get analysis", analysis_url(game_id: @game.id), method: :post, remote: true, class: "btn btn-default btn-block flip-board", data: {disable_with: "<i class=\"fa fa-spinner fa-spin\"></i> Analyzing..."} %>
-        <div class="analysis"></div>
+        <%#= link_to "Get analysis", analysis_url(game_id: @game.id), method: :post, remote: true, class: "btn btn-default btn-block flip-board", data: {disable_with: "<i class=\"fa fa-spinner fa-spin\"></i> Analyzing..."} %>
+        <!-- <div class="analysis"></div> -->
+
         <% @game.moves.each_with_index do |move, index| %>
+          <% if index%2 == 0 %>
+            <span class="pgn-move-num"><%= index/2 + 1 %>.</span>
+          <% end %>
           <%= link_to move.notation, "#", class: "review-notation #{index}-highlight", data: {fen: move.fen, index: index} %>
         <% end %>
       </div>
@@ -68,7 +72,7 @@
   <script type="text/javascript">
     var sessionId = "<%= @game.sessionId %>";
     var token = "<%= @tok_token %>";
-    var userVideoName = "<%= current_user.email if current_user %>";
+    var userVideoName = "<%= current_user.email.truncate(12) if current_user %>";
   </script>
 <% end %>
 
@@ -79,7 +83,7 @@
   }
 
   .review-nav {
-    margin-top: 30px;
+    margin-top: 15px;
   }
 
   .review-board-navigator-container {
@@ -100,5 +104,13 @@
 
   .current-move:hover {
     color: red;
+  }
+
+  .tab-content, .video-chat {
+    margin: 15px 0;
+  }
+
+  .pgn-move-num {
+    color: #adadad;
   }
 </style>

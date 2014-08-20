@@ -22,6 +22,7 @@ $(document).ready(function() {
     loadGamesMoves();
     initializeBinds();
     initializeDomHandlers();
+    styleGameDetailsSandbox();
 
     App.ReviewGame.BOARDS = {};
     App.ReviewGame.BOARDS["sandbox"] = sandboxBoard;
