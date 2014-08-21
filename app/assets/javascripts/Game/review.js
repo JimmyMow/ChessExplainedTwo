@@ -130,6 +130,37 @@ var initializeDomHandlers = function() {
     e.preventDefault();
   });
 
+  $("#variationMoveForward").on("click", function(e) {
+    if(variationBoard.moves.length > variationBoard.moveCounter) {
+      variationBoard.moveCounter++;
+      adjustMoveCounter(App.ReviewGame.moveCounter, "variation");
+
+      positionBoardTrigger(variationBoard.moves[variationBoard.moveCounter - 1]['fen'], "variation");
+    } else if(App.ReviewGame.moves.length < App.ReviewGame.moveCounter) {
+      return false;
+    }
+
+      e.preventDefault();
+    });
+
+  $("#variationMoveBackward").on("click", function(e) {
+    if(variationBoard.moveCounter > 1) {
+      variationBoard.moveCounter--;
+      adjustMoveCounter(variationBoard.moveCounter, "variation");
+      positionBoardTrigger(variationBoard.moves[variationBoard.moveCounter - 1]['fen'], "variation");
+      highlightPgn(variationBoard.moveCounter - 1);
+
+    } else if(variationBoard.moveCounter == 1) {
+      variationBoard.moveCounter--;
+      adjustMoveCounter(variationBoard.moveCounter, "variation");
+      App.dispatcher.trigger('board.start', {board: "variation", channel_name: App.config.channelName});
+    } else {
+      return false;
+    }
+
+    e.preventDefault();
+  });
+
   $("#reviewMoveBeg").on('click', function(e) {
     App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName});
     adjustMoveCounter(0, "review");
@@ -329,15 +360,10 @@ var onMouseoutSquare = function(square, piece) {
 
 var onSnapEnd = function() {
   window.variationBoard.position(window.variationBoard.game.fen());
-
+  window.variationBoard.moveCounter++;
+  adjustMoveCounter(window.variationBoard.moveCounter, "variation");
   positionBoardTrigger(window.variationBoard.game.fen(), "variation");
 
-
   updateVariationBoardMovesArray(App.ReviewGame.moves[window.variationBoard.game.history().length - 1]);
-
-  App.dispatcher.trigger("board.update_variation_game", {
-    channel_name: App.config.channelName,
-    pgn: window.variationBoard.game.history()[window.variationBoard.game.history().length - 1]
-  });
 };
 
