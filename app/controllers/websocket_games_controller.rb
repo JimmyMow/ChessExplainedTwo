@@ -35,7 +35,8 @@ class WebsocketGamesController < WebsocketRails::BaseController
 
   def add_variation_move
     WebsocketRails[message[:channel_name].to_sym].trigger :add_variation_move, {
-      move: message[:move]
+      move: message[:move],
+      directions: message[:directions]
     }
   end
 

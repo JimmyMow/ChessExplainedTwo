@@ -37,7 +37,7 @@ var variationBoardInitialization = function() {
   window.variationBoard = new ChessBoard('variationBoard', cfg);
   window.variationBoard.game = new Chess();
   window.variationBoard.moves = []
-  window.variationBoard.moveCounter = 0;
+  // window.variationBoard.moveCounter = 0;
 };
 
 // Initialize Binds
@@ -53,6 +53,7 @@ var initializeBinds = function() {
   });
 
   channel.bind("position_board", function(data) {
+    console.log(data);
     App.ReviewGame.BOARDS[data["board"]].position(data["position"]);
   });
 
@@ -78,14 +79,16 @@ var initializeBinds = function() {
   });
 
   channel.bind("add_variation_move", function(data) {
-    window.variationBoard.moves.push(data["move"]);
+    if(data["directions"] == "add") {
+      window.variationBoard.moves.push(data["move"]);
+    } else if(data["directions"] == "pop") {
+      window.variationBoard.moves.pop();
+    }
   });
 
   channel.bind("adjust_move_counter", function(data) {
     if (data["board"] == "review") {
       App.ReviewGame.moveCounter = parseInt(data["counter"]);
-    } else if(data["board"] == "variation") {
-      variationBoard.moveCounter = parseInt(data["counter"]);
     }
   });
 
@@ -130,30 +133,13 @@ var initializeDomHandlers = function() {
     e.preventDefault();
   });
 
-  $("#variationMoveForward").on("click", function(e) {
-    if(variationBoard.moves.length > variationBoard.moveCounter) {
-      variationBoard.moveCounter++;
-      adjustMoveCounter(App.ReviewGame.moveCounter, "variation");
-
-      positionBoardTrigger(variationBoard.moves[variationBoard.moveCounter - 1]['fen'], "variation");
-    } else if(App.ReviewGame.moves.length < App.ReviewGame.moveCounter) {
-      return false;
-    }
-
-      e.preventDefault();
-    });
-
-  $("#variationMoveBackward").on("click", function(e) {
-    if(variationBoard.moveCounter > 1) {
-      variationBoard.moveCounter--;
-      adjustMoveCounter(variationBoard.moveCounter, "variation");
-      positionBoardTrigger(variationBoard.moves[variationBoard.moveCounter - 1]['fen'], "variation");
-      highlightPgn(variationBoard.moveCounter - 1);
-
-    } else if(variationBoard.moveCounter == 1) {
-      variationBoard.moveCounter--;
-      adjustMoveCounter(variationBoard.moveCounter, "variation");
-      App.dispatcher.trigger('board.start', {board: "variation", channel_name: App.config.channelName});
+  $("#undoVariationMove").on("click", function(e) {
+    if(variationBoard.moves.length > 1) {
+      positionBoardTrigger(variationBoard.moves[variationBoard.moves.length - 2]['fen'], "variation");
+      updateVariationBoardMovesArray(null, "pop");
+    } else if(variationBoard.moves.length == 1) {
+      positionBoardTrigger(reviewBoard.fen(), "variation");
+      updateVariationBoardMovesArray(null, "pop");
     } else {
       return false;
     }
@@ -214,11 +200,11 @@ var positionBoardTrigger = function(position, board) {
   });
 };
 
-var updateVariationBoardMovesArray = function(move) {
+var updateVariationBoardMovesArray = function(move, direction) {
   App.dispatcher.trigger("board.add_variation_move", {
     move: move,
+    directions: direction,
     channel_name: App.config.channelName
-
   });
 };
 
@@ -359,11 +345,9 @@ var onMouseoutSquare = function(square, piece) {
 };
 
 var onSnapEnd = function() {
-  window.variationBoard.position(window.variationBoard.game.fen());
-  window.variationBoard.moveCounter++;
-  adjustMoveCounter(window.variationBoard.moveCounter, "variation");
   positionBoardTrigger(window.variationBoard.game.fen(), "variation");
 
-  updateVariationBoardMovesArray(App.ReviewGame.moves[window.variationBoard.game.history().length - 1]);
+  var move = {fen: variationBoard.fen(), notation: variationBoard.game.history()[variationBoard.game.history().length - 1]};
+  updateVariationBoardMovesArray(move, "add");
 };
 
