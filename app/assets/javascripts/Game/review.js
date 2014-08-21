@@ -36,6 +36,8 @@ var variationBoardInitialization = function() {
 
   window.variationBoard = new ChessBoard('variationBoard', cfg);
   window.variationBoard.game = new Chess();
+  window.variationBoard.moves = []
+  window.variationBoard.moveCounter = 0;
 };
 
 // Initialize Binds
@@ -61,7 +63,6 @@ var initializeBinds = function() {
     window.variationBoard.game = new Chess();
 
     var moves = App.ReviewGame.moves.slice(0, [App.ReviewGame.moveCounter]);
-    console.log(moves);
     moves.forEach(function(item, index) {
       window.variationBoard.game.move(item["notation"]);
     });
@@ -76,8 +77,16 @@ var initializeBinds = function() {
     window.variationBoard.game.move(data["pgn"]);
   });
 
+  channel.bind("add_variation_move", function(data) {
+    window.variationBoard.moves.push(data["move"]);
+  });
+
   channel.bind("adjust_move_counter", function(data) {
-    App.ReviewGame.moveCounter = parseInt(data["counter"]);
+    if (data["board"] == "review") {
+      App.ReviewGame.moveCounter = parseInt(data["counter"]);
+    } else if(data["board"] == "variation") {
+      variationBoard.moveCounter = parseInt(data["counter"]);
+    }
   });
 
   channel.bind("highlight_pgn", function(data) {
@@ -91,7 +100,7 @@ var initializeDomHandlers = function() {
   $("#reviewMoveForward").on("click", function(e) {
     if(App.ReviewGame.moves.length > App.ReviewGame.moveCounter) {
       App.ReviewGame.moveCounter++;
-      adjustMoveCounter(App.ReviewGame.moveCounter);
+      adjustMoveCounter(App.ReviewGame.moveCounter, "review");
 
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
       highlightPgn(App.ReviewGame.moveCounter - 1);
@@ -105,13 +114,13 @@ var initializeDomHandlers = function() {
   $("#reviewMoveBackward").on("click", function(e) {
     if(App.ReviewGame.moveCounter > 1) {
       App.ReviewGame.moveCounter--;
-      adjustMoveCounter(App.ReviewGame.moveCounter);
+      adjustMoveCounter(App.ReviewGame.moveCounter, "review");
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
       highlightPgn(App.ReviewGame.moveCounter - 1);
 
     } else if(App.ReviewGame.moveCounter == 1) {
       App.ReviewGame.moveCounter--;
-      adjustMoveCounter(App.ReviewGame.moveCounter);
+      adjustMoveCounter(App.ReviewGame.moveCounter, "review");
       App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName});
 
     } else {
@@ -123,7 +132,7 @@ var initializeDomHandlers = function() {
 
   $("#reviewMoveBeg").on('click', function(e) {
     App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName});
-    adjustMoveCounter(0);
+    adjustMoveCounter(0, "review");
     $(".review-notation").removeClass('current-move');
     e.preventDefault();
   });
@@ -131,7 +140,7 @@ var initializeDomHandlers = function() {
   $("#reviewMoveEnd").on('click', function(e) {
     App.ReviewGame.moveCounter = App.ReviewGame.moves.length - 1;
     positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moves.length - 1]["fen"], "review");
-    adjustMoveCounter(App.ReviewGame.moves.length - 1);
+    adjustMoveCounter(App.ReviewGame.moves.length - 1, "review");
     highlightPgn(App.ReviewGame.moveCounter);
     e.preventDefault();
   });
@@ -140,7 +149,7 @@ var initializeDomHandlers = function() {
     var move = $(this);
     positionBoardTrigger(move.data("fen"), "review");
     highlightPgn(move.data("index"));
-    adjustMoveCounter(move.data("index") + 1);
+    adjustMoveCounter(move.data("index") + 1, "review");
     e.preventDefault();
   });
 
@@ -174,6 +183,14 @@ var positionBoardTrigger = function(position, board) {
   });
 };
 
+var updateVariationBoardMovesArray = function(move) {
+  App.dispatcher.trigger("board.add_variation_move", {
+    move: move,
+    channel_name: App.config.channelName
+
+  });
+};
+
 // Vidoechat
 var openTokVideoStream = function() {
   var apiKey = "44827272";
@@ -200,8 +217,8 @@ var loadGamesMoves = function() {
   });
 };
 
-var adjustMoveCounter = function(counter) {
-  App.dispatcher.trigger("board.adjust_move_counter", {counter: counter, channel_name: App.config.channelName})
+var adjustMoveCounter = function(counter, board) {
+  App.dispatcher.trigger("board.adjust_move_counter", {counter: counter, channel_name: App.config.channelName, board: board})
 };
 
 var highlightPgn = function(move){
@@ -213,11 +230,19 @@ var sandboxOnChange = function(oldPos, newPos) {
   positionBoardTrigger(newPos, "sandbox");
 };
 
-var styleGameDetailsSandbox = function() {
+var reviewStyles = function() {
+  // Sandbox button styles
   // var margin = $('.spare-pieces-7492f').height();
   // alert(margin);
   $('.game-details').css({"margin-top": 62});
+
+  // Review PGN styles
+  var boardHeight = $("#reviewBoardContainer").height() - 10;
+  var buttonsHeight = $(".review-buttons").height() + 20;
+
+  $('.moves-container').css({"max-height": boardHeight - buttonsHeight});
 };
+
 
 
 
@@ -306,6 +331,9 @@ var onSnapEnd = function() {
   window.variationBoard.position(window.variationBoard.game.fen());
 
   positionBoardTrigger(window.variationBoard.game.fen(), "variation");
+
+
+  updateVariationBoardMovesArray(App.ReviewGame.moves[window.variationBoard.game.history().length - 1]);
 
   App.dispatcher.trigger("board.update_variation_game", {
     channel_name: App.config.channelName,

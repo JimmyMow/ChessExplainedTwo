@@ -22,7 +22,7 @@ $(document).ready(function() {
     loadGamesMoves();
     initializeBinds();
     initializeDomHandlers();
-    styleGameDetailsSandbox();
+    reviewStyles();
 
     App.ReviewGame.BOARDS = {};
     App.ReviewGame.BOARDS["sandbox"] = sandboxBoard;
