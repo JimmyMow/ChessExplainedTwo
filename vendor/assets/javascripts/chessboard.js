@@ -703,7 +703,8 @@ function animateSquareToSquare(src, dest, piece, completeFn) {
     display: '',
     position: 'absolute',
     top: srcSquarePosition.top,
-    left: srcSquarePosition.left
+    left: srcSquarePosition.left,
+    zIndex: 20000
   });
 
   // remove original piece from source square

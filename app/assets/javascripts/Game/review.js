@@ -37,7 +37,6 @@ var variationBoardInitialization = function() {
   window.variationBoard = new ChessBoard('variationBoard', cfg);
   window.variationBoard.game = new Chess();
   window.variationBoard.moves = []
-  // window.variationBoard.moveCounter = 0;
 };
 
 // Initialize Binds
@@ -53,7 +52,6 @@ var initializeBinds = function() {
   });
 
   channel.bind("position_board", function(data) {
-    console.log(data);
     App.ReviewGame.BOARDS[data["board"]].position(data["position"]);
   });
 
@@ -182,6 +180,11 @@ var initializeDomHandlers = function() {
 
   $("#triggerVariation").on('click', function() {
     App.dispatcher.trigger("board.trigger_variation", {channel_name: App.config.channelName});
+
+    var curr_move = App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]["notation"]
+
+    var next_move = App.ReviewGame.moves[App.ReviewGame.moveCounter]["notation"]
+    $("#myModalLabel").text("New variation after " + curr_move + " instead of " + next_move);
   });
 
   $('#myModal').on('hidden.bs.modal', function (e) {
