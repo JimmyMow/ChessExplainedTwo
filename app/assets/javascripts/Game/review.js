@@ -179,12 +179,22 @@ var initializeDomHandlers = function() {
   });
 
   $("#triggerVariation").on('click', function() {
+    if (App.ReviewGame.moveCounter < 1) {return false}
+
     App.dispatcher.trigger("board.trigger_variation", {channel_name: App.config.channelName});
 
-    var curr_move = App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]["notation"]
+    var curr_move = App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]
 
-    var next_move = App.ReviewGame.moves[App.ReviewGame.moveCounter]["notation"]
-    $("#myModalLabel").text("New variation after " + curr_move + " instead of " + next_move);
+    var next_move = App.ReviewGame.moves[App.ReviewGame.moveCounter]
+    var next_move_index = App.ReviewGame.moves.indexOf(next_move);
+
+    if(next_move_index%2 != 0) {
+      var next_move_sentece = Math.ceil((next_move_index + 1)/2) + "..." + next_move["notation"];
+    } else {
+      var next_move_sentece = (next_move_index + 1)/2 + "." + next_move["notation"];
+    }
+
+    $("#myModalLabel").text("Instead of " + next_move_sentece);
   });
 
   $('#myModal').on('hidden.bs.modal', function (e) {
@@ -353,4 +363,23 @@ var onSnapEnd = function() {
   var move = {fen: variationBoard.fen(), notation: variationBoard.game.history()[variationBoard.game.history().length - 1]};
   updateVariationBoardMovesArray(move, "add");
 };
+
+
+
+
+
+
+// AJAX Requests
+
+// $.ajax({
+//   type: 'POST',
+//   url: '/variations',
+//   contentType: 'application/json',
+//   dataType: 'json',
+//   data: JSON.stringify(),
+
+//   success: function(data) {
+//     // window.location = "/games/" + data['id'] + "/review";
+//   }
+// });
 

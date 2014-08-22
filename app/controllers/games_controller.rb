@@ -15,6 +15,7 @@ class GamesController < ApplicationController
   def review
     config_opentok
     @tok_token = @opentok.generate_token @game.sessionId
+    @variation = Variation.new
   end
 
   # GET /games/new

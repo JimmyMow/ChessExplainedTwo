@@ -24,9 +24,14 @@
                 <div id="variationBoard" style="width: 500px"></div>
               </div>
               <div class="modal-footer">
-                <%= link_to "<i class=\"fa fa-angle-left fa-2x\"></i>".html_safe, "#", class: "btn btn-default review-nav-link", id: "undoVariationMove" %>
+                <%= link_to "Undo last move".html_safe, "#", class: "btn btn-default btn btn-danger pull-left review-nav-link", id: "undoVariationMove" %>
 
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <!-- <button type="button" class="btn btn-primary" id="">Save this variation</button> -->
+                <%= form_for(@variation, remote: true) do |f| %>
+                  <%= f.button "Save this variation", class: "btn btn-primary", id: "saveVariation" %>
+                  <%= f.hidden_field :variation_moves %>
+                  <%= f.hidden_field :current_move %>
+                <% end %>
               </div>
             </div>
           </div>

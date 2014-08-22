@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
   resource :analysis, only: [:create]
   root to: "pages#home"
+
+  resource :variations, only: [:create]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
