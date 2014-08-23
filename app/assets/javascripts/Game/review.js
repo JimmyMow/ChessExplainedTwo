@@ -66,6 +66,19 @@ var initializeBinds = function() {
       window.variationBoard.game.move(item["notation"]);
     });
 
+    // var curr_move = App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]
+
+    var next_move = App.ReviewGame.moves[App.ReviewGame.moveCounter]
+    var next_move_index = App.ReviewGame.moves.indexOf(next_move);
+
+    if(next_move_index%2 != 0) {
+      var next_move_sentece = Math.ceil((next_move_index + 1)/2) + "..." + next_move["notation"];
+    } else {
+      var next_move_sentece = Math.ceil((next_move_index + 1)/2) + "." + next_move["notation"];
+    }
+
+    $("#myModalLabel").text("Instead of " + next_move_sentece);
+
   });
 
   channel.bind("close_variation", function(data) {
@@ -79,8 +92,12 @@ var initializeBinds = function() {
   channel.bind("add_variation_move", function(data) {
     if(data["directions"] == "add") {
       window.variationBoard.moves.push(data["move"]);
+      if(parseInt(data["moveNum"]) > window.variationBoard.game.history().length) {
+        window.variationBoard.game.move(data["move"]["notation"]);
+      }
     } else if(data["directions"] == "pop") {
       window.variationBoard.moves.pop();
+      window.variationBoard.game.undo();
     }
   });
 
@@ -182,19 +199,6 @@ var initializeDomHandlers = function() {
     if (App.ReviewGame.moveCounter < 1) {return false}
 
     App.dispatcher.trigger("board.trigger_variation", {channel_name: App.config.channelName});
-
-    var curr_move = App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]
-
-    var next_move = App.ReviewGame.moves[App.ReviewGame.moveCounter]
-    var next_move_index = App.ReviewGame.moves.indexOf(next_move);
-
-    if(next_move_index%2 != 0) {
-      var next_move_sentece = Math.ceil((next_move_index + 1)/2) + "..." + next_move["notation"];
-    } else {
-      var next_move_sentece = (next_move_index + 1)/2 + "." + next_move["notation"];
-    }
-
-    $("#myModalLabel").text("Instead of " + next_move_sentece);
   });
 
   $('#myModal').on('hidden.bs.modal', function (e) {
@@ -220,11 +224,12 @@ var positionBoardTrigger = function(position, board) {
   });
 };
 
-var updateVariationBoardMovesArray = function(move, direction) {
+var updateVariationBoardMovesArray = function(move, direction, moveNum) {
   App.dispatcher.trigger("board.add_variation_move", {
     move: move,
     directions: direction,
-    channel_name: App.config.channelName
+    channel_name: App.config.channelName,
+    moveNum: moveNum
   });
 };
 
@@ -368,25 +373,6 @@ var onSnapEnd = function() {
   positionBoardTrigger(window.variationBoard.game.fen(), "variation");
 
   var move = {fen: variationBoard.fen(), notation: variationBoard.game.history()[variationBoard.game.history().length - 1]};
-  updateVariationBoardMovesArray(move, "add");
+  updateVariationBoardMovesArray(move, "add", window.variationBoard.game.history().length);
 };
-
-
-
-
-
-
-// AJAX Requests
-
-// $.ajax({
-//   type: 'POST',
-//   url: '/variations',
-//   contentType: 'application/json',
-//   dataType: 'json',
-//   data: JSON.stringify(),
-
-//   success: function(data) {
-//     // window.location = "/games/" + data['id'] + "/review";
-//   }
-// });
 
