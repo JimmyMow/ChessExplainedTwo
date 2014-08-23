@@ -30,7 +30,7 @@
                 <%= form_for(@variation, remote: true) do |f| %>
                   <%= f.button "Save this variation", class: "btn btn-primary", id: "saveVariation" %>
                   <%= f.hidden_field :variation_moves %>
-                  <%= f.hidden_field :current_move %>
+                  <%= f.hidden_field :move_id %>
                 <% end %>
               </div>
             </div>

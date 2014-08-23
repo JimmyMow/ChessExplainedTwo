@@ -1,5 +1,7 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy, :review]
+  before_action :authenticate_user!, only: [:create]
+  before_action :check_for_user, only: [:new]
 
   # GET /games
   # GET /games.json
@@ -83,6 +85,12 @@ class GamesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_game
       @game = Game.find(params[:id])
+    end
+
+    def check_for_user
+      unless user_signed_in?
+        flash.now[:notice] = "You need an account to upload a game. Click <a href=\"/users/sign_up\">here</a> to sign up.".html_safe
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

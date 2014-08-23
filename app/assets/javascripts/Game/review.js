@@ -200,6 +200,13 @@ var initializeDomHandlers = function() {
   $('#myModal').on('hidden.bs.modal', function (e) {
     App.dispatcher.trigger("board.close_variation", {channel_name: App.config.channelName});
   });
+
+  $("#new_variation").on("submit", function() {
+    $("#variation_variation_moves").val(JSON.stringify(variationBoard.moves));
+
+    var curr_move = App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]
+    $("#variation_current_move").val(JSON.stringify(curr_move["id"]));
+  });
 };
 
 
