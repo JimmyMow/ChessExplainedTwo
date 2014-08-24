@@ -209,7 +209,8 @@ var initializeDomHandlers = function() {
     $("#variation_variation_moves").val(JSON.stringify(variationBoard.moves));
 
     var curr_move = App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]
-    $("#variation_current_move").val(JSON.stringify(curr_move["id"]));
+    console.log(JSON.stringify(curr_move["id"]));
+    $("#variation_move_id").val(JSON.stringify(curr_move["id"]));
   });
 };
 
