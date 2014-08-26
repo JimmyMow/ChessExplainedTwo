@@ -305,6 +305,9 @@ var reviewStyles = function() {
   $('.moves-container').css({"max-height": boardHeight - buttonsHeight});
 
   $("#triggerVariation").attr("disabled", "disabled");
+
+  $(window).resize(reviewBoard.resize);
+  // $(window).resize(window.sandboxBoard.resize);
 };
 
 

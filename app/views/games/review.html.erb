@@ -27,11 +27,8 @@
                 <%= link_to "Undo last move".html_safe, "#", class: "btn btn-default btn btn-danger pull-left review-nav-link", id: "undoVariationMove" %>
 
                 <!-- <button type="button" class="btn btn-primary" id="">Save this variation</button> -->
-                <%= form_for(@variation, remote: true) do |f| %>
-                  <%= f.button "Save this variation", class: "btn btn-primary", id: "saveVariation" %>
-                  <%= f.hidden_field :variation_moves %>
-                  <%= f.hidden_field :move_id %>
-                <% end %>
+                <%#= render "variations/form" %>
+
               </div>
             </div>
           </div>
@@ -51,7 +48,7 @@
       </div>
 
       <div id="reviewBoardContainer" class="col-sm-9 text-center">
-        <div id="reviewBoard" style="width: 500px"></div>
+        <div id="reviewBoard" style="width: 85%"></div>
         <section class="review-board-navigator-container">
           <%= link_to "<i class=\"fa fa-angle-double-left fa-2x\"></i>".html_safe, "#", class: "btn btn-default review-nav-link", id: "reviewMoveBeg" %>
           <%= link_to "<i class=\"fa fa-angle-left fa-2x\"></i>".html_safe, "#", class: "btn btn-default review-nav-link", id: "reviewMoveBackward" %>
@@ -97,11 +94,11 @@
     margin-top: 15px;
   }
 
-  .review-board-navigator-container {
+  .review-board-navigator-container, #sandboxBoardContainer {
     text-align: center;
   }
 
-  #reviewBoard, #variationBoard {
+  #reviewBoard, #variationBoard, #sandboxBoard {
     display: inline-block;
   }
 

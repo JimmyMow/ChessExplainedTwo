@@ -41,7 +41,7 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.save
         @game.create_moves(params[:game][:moves])
-        format.html { redirect_to review_game_url(@game), notice: 'Game was successfully created.' }
+        format.html { redirect_to review_game_url(@game), notice: 'Awesome! Your game was created. Now share this url with anyone you want to join your game room.' }
         format.json { render :show, status: :created, location: @game }
       else
         format.html { render :new }

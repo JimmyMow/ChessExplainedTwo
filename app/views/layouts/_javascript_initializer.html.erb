@@ -3,7 +3,7 @@
   App.dispatcher = new WebSocketRails("localhost:3000/websocket");
 
   if ( window.location.pathname == "/games/<%= params[:id] %>/review"  ) {
-    var channelNameVar = "<%= in_words(@game.try(:id) || nil) %>";
+      var channelNameVar = "<%= in_words(@game.try(:id) || nil) %>";
   }
 
   App.config = {
