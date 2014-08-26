@@ -45,6 +45,8 @@ var initializeBinds = function() {
 
   channel.bind("start_position", function(data){
     App.ReviewGame.BOARDS[data["board"]].start();
+    $("#triggerVariation").attr("disabled", "disabled");
+    $('.review-notation').removeClass("current-move");
   });
 
     channel.bind("clear_position", function(data){
@@ -53,6 +55,10 @@ var initializeBinds = function() {
 
   channel.bind("position_board", function(data) {
     App.ReviewGame.BOARDS[data["board"]].position(data["position"]);
+
+    if(App.ReviewGame.moveCounter > 0) {
+      $("#triggerVariation").attr("disabled", false);
+    }
   });
 
   channel.bind("trigger_variation", function(data) {
@@ -101,6 +107,10 @@ var initializeBinds = function() {
     }
   });
 
+  channel.bind("show_variations", function(data) {
+    alert("There are variations");
+  });
+
   channel.bind("adjust_move_counter", function(data) {
     if (data["board"] == "review") {
       App.ReviewGame.moveCounter = parseInt(data["counter"]);
@@ -121,6 +131,7 @@ var initializeDomHandlers = function() {
       adjustMoveCounter(App.ReviewGame.moveCounter, "review");
 
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
+      checkForVariations(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]);
       highlightPgn(App.ReviewGame.moveCounter - 1);
     } else if(App.ReviewGame.moves.length < App.ReviewGame.moveCounter) {
       return false;
@@ -209,7 +220,6 @@ var initializeDomHandlers = function() {
     $("#variation_variation_moves").val(JSON.stringify(variationBoard.moves));
 
     var curr_move = App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]
-    console.log(JSON.stringify(curr_move["id"]));
     $("#variation_move_id").val(JSON.stringify(curr_move["id"]));
   });
 };
@@ -260,6 +270,15 @@ var loadGamesMoves = function() {
   });
 };
 
+var checkForVariations = function(moveObject) {
+  if(moveObject["variations"].length > 0) {
+    App.dispatcher.trigger("board.show_variations", {
+      move_object: moveObject,
+      channel_name: App.config.channelName
+    });
+  }
+};
+
 var adjustMoveCounter = function(counter, board) {
   App.dispatcher.trigger("board.adjust_move_counter", {counter: counter, channel_name: App.config.channelName, board: board})
 };
@@ -284,6 +303,8 @@ var reviewStyles = function() {
   var buttonsHeight = $(".review-buttons").height() + 20;
 
   $('.moves-container').css({"max-height": boardHeight - buttonsHeight});
+
+  $("#triggerVariation").attr("disabled", "disabled");
 };
 
 

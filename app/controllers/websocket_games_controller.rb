@@ -41,6 +41,12 @@ class WebsocketGamesController < WebsocketRails::BaseController
     }
   end
 
+  def show_variations
+    WebsocketRails[message[:channel_name].to_sym].trigger :show_variations, {
+      moveObject: message[:move_object],
+    }
+  end
+
   def adjust_move_counter
     WebsocketRails[message[:channel_name].to_sym].trigger :adjust_move_counter, {
       counter: message[:counter],

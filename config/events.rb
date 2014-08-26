@@ -6,6 +6,7 @@ WebsocketRails::EventMap.describe do
     subscribe :close_variation, :to => WebsocketGamesController, :with_method => :close_variation
     subscribe :update_variation_game, :to => WebsocketGamesController, :with_method => :update_variation_game
     subscribe :add_variation_move, :to => WebsocketGamesController, :with_method => :add_variation_move
+    subscribe :show_variations, :to => WebsocketGamesController, :with_method => :show_variations
 
 
 

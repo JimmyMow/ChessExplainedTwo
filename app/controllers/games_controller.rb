@@ -89,7 +89,7 @@ class GamesController < ApplicationController
 
     def check_for_user
       unless user_signed_in?
-        flash.now[:notice] = "You need an account to upload a game. Click <a href=\"/users/sign_up\">here</a> to sign up.".html_safe
+        flash.now[:notice] = "You need to be signed in to upload a game. Click <a href=\"/users/sign_in\">here</a> to sign in.".html_safe
       end
     end
 
