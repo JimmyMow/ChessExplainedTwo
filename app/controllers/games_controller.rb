@@ -20,6 +20,10 @@ class GamesController < ApplicationController
     @variation = Variation.new
   end
 
+  def manual
+    @game = Game.new
+  end
+
   # GET /games/new
   def new
     @game = Game.new

@@ -30,6 +30,11 @@ $(document).ready(function() {
     App.ReviewGame.BOARDS["variation"] = variationBoard;
   }
 
+  if(App.config.isManual) {
+    manualBoardInitialization();
+    manualDomHandlers();
+  }
+
   // Root page
   if(App.config.isHome) {
 

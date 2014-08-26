@@ -108,7 +108,7 @@ var initializeBinds = function() {
   });
 
   channel.bind("show_variations", function(data) {
-    alert("There are variations");
+
   });
 
   channel.bind("adjust_move_counter", function(data) {

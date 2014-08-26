@@ -7,7 +7,6 @@ class WebsocketGamesController < WebsocketRails::BaseController
   end
 
   def start
-    puts message[:board]
     WebsocketRails[message[:channel_name].to_sym].trigger :start_position, {
       board: message[:board]
     }
