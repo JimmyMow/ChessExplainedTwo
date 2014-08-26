@@ -1,8 +1,4 @@
 <div class="container">
-  <div class="col-sm-2 manual-pgn">
-    <h3 class="text-center">Your PGN:</h3>
-    <p><span id="pgn"></span></p>
-  </div>
   <div class="col-sm-8 text-center">
     <div class="manual-intructions">
       <h1 class="text-center">Manually upload your game</h1>
@@ -17,6 +13,10 @@
         <%= f.button "Submit game", class: "btn btn-primary pull-right", data: {disable_with: "<i class=\"fa fa-spinner fa-spin\"></i> Loading..."} %>
       <% end %>
     </div>
+  </div>
+  <div class="col-sm-2 manual-pgn">
+    <h3 class="text-center">Your PGN:</h3>
+    <p><span id="pgn"></span></p>
   </div>
 </div>
 
