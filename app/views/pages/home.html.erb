@@ -1,8 +1,9 @@
-<div class="container text-center">
-  <header>
-    <h1>ChessExplained</h1>
-    <p class="description">Learn, have fun, and expierence the game of chess with anyone over the internet</p>
-  </header>
+<div class="container">
+  <% if user_signed_in? %>
+    <%= render "signed_in_root" %>
+  <% else %>
+    <%= render "not_signed_in_root" %>
+  <% end %>
 </div><!-- /container -->
 
 <style type="text/css">
@@ -18,5 +19,19 @@
     color: rgba(0,0,0,0.3);
     font-family: "Lato";
     font-weight: 300;
+  }
+
+  .schedule-a-lesson, .how-it-works {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  .schedule-a-lesson > h2, .how-it-works > h2 {
+    margin-bottom: 20px;
+  }
+
+  .teacher-description {
+    text-align: left;
+    min-height: 60px;
   }
 </style>

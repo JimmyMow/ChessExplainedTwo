@@ -17,9 +17,7 @@
   <%= render 'layouts/javascript_initializer' %>
 </head>
 <body>
-  <% if user_signed_in? %>
-    <%= render "layouts/navbar" %>
-  <% end %>
+  <%= render "layouts/navbar" %>
 
   <% if notice %>
       <div class="alert alert-info alert-dismissible" role="alert">
