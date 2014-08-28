@@ -1,0 +1,16 @@
+.manual-pgn > h3 {
+  border-bottom: 1px solid #ccc;
+}
+
+  #manualBoard {
+    display: inline-block;
+  }
+
+  .new_game {
+    /*display: inline-block;*/
+  }
+
+  .manual-navigation {
+    width: 60%;
+    margin: 0 auto;
+  }

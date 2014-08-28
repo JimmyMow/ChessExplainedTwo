@@ -1,0 +1,84 @@
+/* Default styles */
+h1 {
+  font-weight: 400;
+  font-family: "Lato";
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+h3 {
+  font-weight: 300;
+  font-size: 20px;
+  color: rgba(0, 0, 0, .65);
+  margin-bottom: 25px;
+}
+/* Not signed in */
+.get-started-container {
+  width: 30%;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 10%;
+}
+
+.get-started {
+  text-transform: uppercase;
+  font-family: "Lato";
+}
+
+.background {
+  background: url("http://images2.alphacoders.com/717/71792.jpg") no-repeat center center fixed;
+  background-size: cover;
+  height: 600px;
+}
+
+.header-description {
+  display: block;
+  padding: 0 0 0.6em 0.1em;
+  font-size: 22px;
+  color: white;
+  font-family: "Lato";
+  font-weight: 300;
+}
+
+.schedule-a-lesson, .how-it-works {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+}
+
+.schedule-a-lesson > h2, .how-it-works > h2 {
+  margin-bottom: 20px;
+}
+
+.teacher-description {
+  text-align: left;
+  min-height: 60px;
+}
+
+.how-it-works-description {
+  text-align: left;
+}
+
+/* Signed in */
+.upload-img {
+  width: 100%;
+  height: 300px;
+}
+
+.upload-options {
+  margin-top: 20px;
+}
+
+.upload-options-container {
+  padding-bottom: 25px;
+  border-bottom: 1px solid #ccc;
+}
+
+.schedule-options-container {
+  margin-top: 50px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 25px;
+}
+
+.description {
+  text-align: left;
+}
