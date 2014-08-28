@@ -1,0 +1,40 @@
+.video-box {
+  display: inline-block;
+}
+
+.review-nav {
+  margin-top: 15px;
+}
+
+.review-board-navigator-container, #sandboxBoardContainer {
+  text-align: center;
+}
+
+#reviewBoard, #variationBoard, #sandboxBoard {
+  display: inline-block;
+}
+
+.review-nav-link {
+  margin: 0 5px;
+}
+
+.current-move {
+  color: red;
+}
+
+.current-move:hover {
+  color: red;
+}
+
+.tab-content, .video-chat {
+  margin: 15px 0;
+}
+
+.pgn-move-num {
+  color: #000080;
+}
+
+.moves-container {
+  margin-top: 10px;
+  overflow-y: scroll;
+}

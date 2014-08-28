@@ -16,3 +16,13 @@ var regualarPgnUpload = function() {
         $('#game_moves').val(JSON.stringify(moveObjects));
     });
 };
+
+var pgnUploadFormValidation = function() {
+    $("#game_moves").on("keyup", function() {
+        if( $(this).val().length > 0 ) {
+            $(".actions button").attr("disabled", false);
+        } else if($(this).val().length == 0) {
+            $(".actions button").attr("disabled", "disabled");
+        }
+    });
+};

@@ -3,6 +3,7 @@ $(document).ready(function() {
   // GAME/NEW
   if (App.config.isNewGame) {
     regualarPgnUpload();
+    pgnUploadFormValidation();
   }
 
 

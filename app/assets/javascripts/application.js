@@ -18,7 +18,3 @@
 //= require websocket_rails/main
 //= require documentReady
 //= require_tree .
-
-if(document.readyState == "loading") {
-  console.log("page is loading brotha");
-}
