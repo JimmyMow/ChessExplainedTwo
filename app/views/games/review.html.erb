@@ -66,7 +66,7 @@
         <%= link_to "Flip board", "#", class: "btn btn-default btn-block flip-board", id: "sandboxFlipBoard", data: {board: "sandbox"} %>
       </div>
       <div id="sandboxBoardContainer" class="col-sm-9">
-        <div id="sandboxBoard" style="width: 500px"></div>
+        <div id="sandboxBoard" style="width: 400px"></div>
       </div>
     </div>
   </div>
@@ -80,7 +80,7 @@
   <script type="text/javascript">
     var sessionId = "<%= @game.sessionId %>";
     var token = "<%= @tok_token %>";
-    var userVideoName = "<%= current_user.email.truncate(12) if current_user %>";
+    var userVideoName = "<%= user_signed_in? ? current_user.email.truncate(12) : 'Anonymous' %>";
   </script>
 <% end %>
 

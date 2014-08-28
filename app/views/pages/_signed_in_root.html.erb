@@ -1,21 +1,23 @@
-<div class="row col-sm-12 upload-options-container">
-  <h1 class="text-center">Upload your game</h1>
+<div class="container">
+  <div class="row col-sm-12 upload-options-container">
+    <h1 class="text-center">Upload your game</h1>
 
-  <div class="upload-options">
-    <section class="col-sm-6">
-      <div class="call-to-action text-center">
-        <h3 class="text-center">Upload your game by enetering it's <%= link_to "PGN", "http://en.wikipedia.org/wiki/Portable_Game_Notation", target: "_blank" %></h3>
-        <%= link_to "Upload my game with PGN", new_game_url, class: "btn btn-default btn-block" %>
-      </div>
-    </section>
+    <div class="upload-options">
+      <section class="col-sm-6">
+        <div class="call-to-action text-center">
+          <h3 class="text-center">Upload your game by enetering it's <%= link_to "PGN", "http://en.wikipedia.org/wiki/Portable_Game_Notation", target: "_blank" %></h3>
+          <%= link_to "Upload my game with PGN", new_game_url, class: "btn btn-default btn-block" %>
+        </div>
+      </section>
 
-    <section class="col-sm-6">
-      <h3 class="text-center">Upload your game by playing out the moves</h3>
-      <div class="call-to-action text-center">
-        <%= link_to "Upload my game manually", manual_upload_url, class: "btn btn-default btn-block" %>
-      </div>
-    </section>
+      <section class="col-sm-6">
+        <h3 class="text-center">Upload your game by playing out the moves</h3>
+        <div class="call-to-action text-center">
+          <%= link_to "Upload my game manually", manual_upload_url, class: "btn btn-default btn-block" %>
+        </div>
+      </section>
 
+    </div>
   </div>
 </div>
 

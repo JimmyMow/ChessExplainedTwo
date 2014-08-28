@@ -1,4 +1,5 @@
 class WebsocketGamesController < WebsocketRails::BaseController
+
   def position_board
     WebsocketRails[message[:channel_name].to_sym].trigger :position_board, {
       position: message[:position],
@@ -58,4 +59,5 @@ class WebsocketGamesController < WebsocketRails::BaseController
       pgn: message[:pgn]
     }
   end
+
 end
