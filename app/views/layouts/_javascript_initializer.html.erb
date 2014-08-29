@@ -7,7 +7,7 @@
   }
 
   App.config = {
-    userId: <%= current_user.id if current_user %>,
+    userId: <%= current_user ? current_user.id : "null" %>,
     isGame: <%= current_page?(game_url(params[:id] || 1)) %> || <%= current_page?(review_game_url(params[:id] || 1)) %>,
     isReview: <%= current_page?(review_game_url(params[:id] || 1)) %>,
     isManual: <%= current_page?(manual_upload_url) %>,

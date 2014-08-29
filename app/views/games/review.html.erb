@@ -104,7 +104,7 @@
     var sessionId = "<%= @game.sessionId %>";
     var token = "<%= @tok_token %>";
     var userVideoName = "<%= user_signed_in? ? current_user.email.truncate(12) : 'Anonymous' %>";
-    var ownerId = "<%= @game.owner.id %>"
-    var isOwner = "<%= @game.owner == current_user ? true : false %>"
+    var ownerId = "<%= @game.owner.id %>";
+    var isOwner = "<%= @game.owner == current_user ? true : false %>";
   </script>
 <% end %>
