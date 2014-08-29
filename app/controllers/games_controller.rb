@@ -18,6 +18,18 @@ class GamesController < ApplicationController
     config_opentok
     @tok_token = @opentok.generate_token @game.sessionId
     @variation = Variation.new
+
+
+    if params[:change_coach_mode]
+      params[:coach_mode] ? @game.coach_mode = true : @game.coach_mode = false
+      @game.save
+    end
+
+    if @game.coach_mode
+      @coachModeStatus = "on"
+    else
+      @coachModeStatus = "off"
+    end
   end
 
   def manual

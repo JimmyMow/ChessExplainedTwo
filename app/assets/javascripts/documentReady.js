@@ -19,7 +19,7 @@ $(document).ready(function() {
     reviewBoardInitialization();
     sandboxBoardInitialization();
     variationBoardInitialization();
-    openTokVideoStream();
+    // openTokVideoStream();
     loadGamesMoves();
     initializeBinds();
     initializeDomHandlers();

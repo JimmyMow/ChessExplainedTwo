@@ -1,4 +1,5 @@
 class WebsocketGamesController < WebsocketRails::BaseController
+  before_action :coach_mode
 
   def position_board
     WebsocketRails[message[:channel_name].to_sym].trigger :position_board, {
@@ -58,6 +59,23 @@ class WebsocketGamesController < WebsocketRails::BaseController
     WebsocketRails[message[:channel_name].to_sym].trigger :highlight_pgn, {
       pgn: message[:pgn]
     }
+  end
+
+  def update_coach_mode_status
+    WebsocketRails[message[:channel_name].to_sym].trigger :update_coach_mode_status, {
+      coachModeStatus: message[:status],
+      ownerId: message[:owner_id]
+    }
+  end
+
+  private
+
+  def coach_mode
+    if message[:coach_mode] == "true"
+      unless Game.find(message[:game_id]).creator_id == current_user.id
+        trigger_failure
+      end
+    end
   end
 
 end

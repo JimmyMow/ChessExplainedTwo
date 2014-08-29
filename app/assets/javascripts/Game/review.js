@@ -1,17 +1,19 @@
 // Board initialization
 var sandboxBoardInitialization = function() {
-  var cfg = {draggable: true, position: 'start', onChange: sandboxOnChange, sparePieces: true, dropOffBoard: 'trash'};
+  var cfg = {draggable: true, position: 'start', onChange: sandboxOnChange, onDrop: sandboxOnDrop, sparePieces: true, dropOffBoard: 'trash'};
 
   window.sandboxBoard = new ChessBoard('sandboxBoard', cfg);
 
 
   $('#sandboxStartBtn').on('click', function(e){
-    App.dispatcher.trigger('board.start', {board: "sandbox", channel_name: App.config.channelName});
+    App.dispatcher.trigger('board.start', {board: "sandbox", channel_name: App.config.channelName, coach_mode: $("#coach_mode_status").attr("data-coach"),
+    game_id: App.config.gameId}, success, failure);
     e.preventDefault();
   });
 
   $('#sandboxClearBtn').on('click', function(e){
-    App.dispatcher.trigger('board.clear', {board: "sandbox", channel_name: App.config.channelName});
+    App.dispatcher.trigger('board.clear', {board: "sandbox", channel_name: App.config.channelName, coach_mode: $("#coach_mode_status").attr("data-coach"),
+    game_id: App.config.gameId}, success, failure);
     e.preventDefault();
   });
 
@@ -121,13 +123,30 @@ var initializeBinds = function() {
     $('.review-notation').removeClass("current-move");
     $('.' + data["pgn"] + '-highlight').addClass("current-move");
   });
+
+  channel.bind("update_coach_mode_status", function(data) {
+    $("#coach_mode_status").attr("data-coach", data["coachModeStatus"]);
+
+    if(data["coachModeStatus"] == "true") {
+      var coachModeStatus = "on";
+    } else {
+      var coachModeStatus = "off";
+    }
+
+    if(App.config.userId != data["ownerId"]) {
+      $(".coach-mode-container").empty();
+      $(".coach-mode-container").append("<span class='pull-right'>Coach mode is " + coachModeStatus);
+    }
+  });
 };
 
 // Initialize DOM Handlers
 var initializeDomHandlers = function() {
   $("#reviewMoveForward").on("click", function(e) {
     if(App.ReviewGame.moves.length > App.ReviewGame.moveCounter) {
-      App.ReviewGame.moveCounter++;
+      if ($("#coach_mode_status").attr("data-coach") == "false" || $("#coach_mode_status").attr("data-coach") == "true" && window.isOwner == "true") {
+        App.ReviewGame.moveCounter++;
+      }
       adjustMoveCounter(App.ReviewGame.moveCounter, "review");
 
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
@@ -142,15 +161,20 @@ var initializeDomHandlers = function() {
 
   $("#reviewMoveBackward").on("click", function(e) {
     if(App.ReviewGame.moveCounter > 1) {
-      App.ReviewGame.moveCounter--;
+      if($("#coach_mode_status").attr("data-coach") == "false" || $("#coach_mode_status").attr("data-coach") == "true" && window.isOwner == "true") {
+        App.ReviewGame.moveCounter--;
+      }
       adjustMoveCounter(App.ReviewGame.moveCounter, "review");
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
       highlightPgn(App.ReviewGame.moveCounter - 1);
 
     } else if(App.ReviewGame.moveCounter == 1) {
-      App.ReviewGame.moveCounter--;
+      if($("#coach_mode_status").attr("data-coach") == "false" || $("#coach_mode_status").attr("data-coach") == "true" && window.isOwner == "true") {
+        App.ReviewGame.moveCounter--;
+      }
       adjustMoveCounter(App.ReviewGame.moveCounter, "review");
-      App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName});
+      App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName, coach_mode: $("#coach_mode_status").attr("data-coach"),
+    game_id: App.config.gameId}, success, failure);
 
     } else {
       return false;
@@ -174,7 +198,8 @@ var initializeDomHandlers = function() {
   });
 
   $("#reviewMoveBeg").on('click', function(e) {
-    App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName});
+    App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName, coach_mode: $("#coach_mode_status").attr("data-coach"),
+    game_id: App.config.gameId}, success, failure);
     adjustMoveCounter(0, "review");
     $(".review-notation").removeClass('current-move');
     e.preventDefault();
@@ -208,12 +233,18 @@ var initializeDomHandlers = function() {
 
   $("#triggerVariation").on('click', function() {
     if (App.ReviewGame.moveCounter < 1) {return false}
+    if($("#coach_mode_status").attr("data-coach") == "true" && window.isOwner == "false") {
+      coachModeMessage();
+      return false;
+    }
 
-    App.dispatcher.trigger("board.trigger_variation", {channel_name: App.config.channelName});
+    App.dispatcher.trigger("board.trigger_variation", {channel_name: App.config.channelName, coach_mode: $("#coach_mode_status").attr("data-coach"),
+    game_id: App.config.gameId}, success, failure);
   });
 
   $('#myModal').on('hidden.bs.modal', function (e) {
-    App.dispatcher.trigger("board.close_variation", {channel_name: App.config.channelName});
+    App.dispatcher.trigger("board.close_variation", {channel_name: App.config.channelName, coach_mode: $("#coach_mode_status").attr("data-coach"),
+    game_id: App.config.gameId}, success, failure);
   });
 
   $("#new_variation").on("submit", function() {
@@ -221,6 +252,20 @@ var initializeDomHandlers = function() {
 
     var curr_move = App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]
     $("#variation_move_id").val(JSON.stringify(curr_move["id"]));
+  });
+
+  $("#coach_mode").on("change", function() {
+    $("#coachModeForm").submit();
+  });
+
+  $("#coachModeForm").on("submit", function() {
+    if( $(".ios-switch:checked").length > 0 ) {
+      var coachModeStatus = "true";
+    } else {
+      var coachModeStatus = "false";
+    }
+
+    App.dispatcher.trigger("board.update_coach_mode_status", {status: coachModeStatus, channel_name: App.config.channelName, owner_id: window.ownerId});
   });
 };
 
@@ -231,8 +276,10 @@ var positionBoardTrigger = function(position, board) {
   App.dispatcher.trigger("board.position_board", {
     position: position,
     channel_name: App.config.channelName,
-    board: board
-  });
+    board: board,
+    coach_mode: $("#coach_mode_status").attr("data-coach"),
+    game_id: App.config.gameId
+  }, success, failure);
 };
 
 var updateVariationBoardMovesArray = function(move, direction, moveNum) {
@@ -240,8 +287,10 @@ var updateVariationBoardMovesArray = function(move, direction, moveNum) {
     move: move,
     directions: direction,
     channel_name: App.config.channelName,
-    moveNum: moveNum
-  });
+    moveNum: moveNum,
+    coach_mode: $("#coach_mode_status").attr("data-coach"),
+    game_id: App.config.gameId
+  }, success, failure);
 };
 
 // Vidoechat
@@ -280,16 +329,28 @@ var checkForVariations = function(moveObject) {
 };
 
 var adjustMoveCounter = function(counter, board) {
-  App.dispatcher.trigger("board.adjust_move_counter", {counter: counter, channel_name: App.config.channelName, board: board})
+  App.dispatcher.trigger("board.adjust_move_counter", {counter: counter, channel_name: App.config.channelName, board: board, coach_mode: $("#coach_mode_status").attr("data-coach"),
+    game_id: App.config.gameId}, success, failure)
 };
 
 var highlightPgn = function(move){
-  App.dispatcher.trigger('board.highlight_pgn', {channel_name: App.config.channelName, pgn: move});
+  App.dispatcher.trigger('board.highlight_pgn', {channel_name: App.config.channelName, pgn: move, coach_mode: $("#coach_mode_status").attr("data-coach"),
+    game_id: App.config.gameId}, success, failure);
 };
 
 // Board methods
 var sandboxOnChange = function(oldPos, newPos) {
+  // if($("#coach_mode_status").attr("data-coach") == "true" && window.isOwner == "false") {
+  //   return 'snapback';
+  // }
   positionBoardTrigger(newPos, "sandbox");
+};
+
+var sandboxOnDrop = function(oldPos, newPos) {
+  if($("#coach_mode_status").attr("data-coach") == "true" && window.isOwner == "false") {
+    coachModeMessage();
+    return 'snapback';
+  }
 };
 
 var reviewStyles = function() {
@@ -308,6 +369,24 @@ var reviewStyles = function() {
 
   $(window).resize(reviewBoard.resize);
   // $(window).resize(window.sandboxBoard.resize);
+};
+
+
+var success = function() {
+
+};
+
+var failure = function() {
+  coachModeMessage();
+};
+
+var coachModeMessage = function() {
+  $("#alert_box").empty();
+
+  $("#alert_box").prepend("<div class='alert alert-danger alert-dismissible' role='alert'></div>");
+  $(".alert").prepend("<button type='button' class='close' data-dismiss='alert'></button>");
+  $(".close").prepend("<span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span>");
+  $(".alert").append("Oops! The creator of this game room has coach mode on, so you can't control the boards until they turn it off.");
 };
 
 

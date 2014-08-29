@@ -16,6 +16,8 @@ WebsocketRails::EventMap.describe do
     subscribe :adjust_move_counter, :to => WebsocketGamesController, :with_method => :adjust_move_counter
 
     subscribe :highlight_pgn, :to => WebsocketGamesController, :with_method => :highlight_pgn
+
+    subscribe :update_coach_mode_status, :to => WebsocketGamesController, :with_method => :update_coach_mode_status
   end
   # You can use this file to map incoming events to controller actions.
   # One event can be mapped to any number of controller actions. The

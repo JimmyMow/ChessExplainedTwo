@@ -1,4 +1,25 @@
 <div class="container">
+
+<input type='hidden' data-coach=<%= @game.coach_mode %> id="coach_mode_status">
+
+<div class="coach-mode-container">
+  <% if @game.owner == current_user %>
+    <%= form_tag review_game_url(@game.id), method: :get, remote: true, class: "pull-right", id: "coachModeForm" do %>
+      <%= hidden_field_tag :change_coach_mode, "true" %>
+      <%= label_tag do %>
+        Teacher mode
+        <%= check_box_tag :coach_mode, true, @game.coach_mode, class: "ios-switch green bigswitch" %>
+        <div class="coach-mode-first-div">
+          <div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <span class="pull-right">Coach mode is <%= @coachModeStatus %></span>
+  <% end %>
+</div>
+
   <ul class="nav nav-tabs col-sm-9 review-nav" role="tablist">
     <li class="active"><a href="#review" role="tab" data-toggle="tab">Review</a></li>
     <li><a href="#sandbox" role="tab" data-toggle="tab">Sandbox</a></li>
@@ -81,5 +102,7 @@
     var sessionId = "<%= @game.sessionId %>";
     var token = "<%= @tok_token %>";
     var userVideoName = "<%= user_signed_in? ? current_user.email.truncate(12) : 'Anonymous' %>";
+    var ownerId = "<%= @game.owner.id %>"
+    var isOwner = "<%= @game.owner == current_user ? true : false %>"
   </script>
 <% end %>
