@@ -18,6 +18,8 @@
   <% else %>
     <span class="pull-right">Coach mode is <%= @coachModeStatus %></span>
   <% end %>
+
+  <%= link_to "<i class=\"fa fa-info-circle\"></i>".html_safe, "#", class: "pull-right coach-mode-info", data: {toggle: "popover", content: "Coach mode is a setting where the creator of the game make himself/herself the only user who can effect the board", placement: "left"} %>
 </div>
 
   <ul class="nav nav-tabs col-sm-9 review-nav" role="tablist">

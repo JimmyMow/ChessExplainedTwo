@@ -19,12 +19,13 @@ $(document).ready(function() {
     reviewBoardInitialization();
     sandboxBoardInitialization();
     variationBoardInitialization();
-    // openTokVideoStream();
+    openTokVideoStream();
     loadGamesMoves();
     initializeBinds();
     initializeDomHandlers();
     reviewStyles();
 
+    $("[data-toggle=popover], .has-popover").popover();
     App.ReviewGame.BOARDS = {};
     App.ReviewGame.BOARDS["sandbox"] = sandboxBoard;
     App.ReviewGame.BOARDS["review"] = reviewBoard;
