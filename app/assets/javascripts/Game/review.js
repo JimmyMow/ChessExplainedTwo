@@ -61,6 +61,8 @@ var initializeBinds = function() {
     if(App.ReviewGame.moveCounter > 0) {
       $("#triggerVariation").attr("disabled", false);
     }
+
+    console.log("here position_board");
   });
 
   channel.bind("trigger_variation", function(data) {
