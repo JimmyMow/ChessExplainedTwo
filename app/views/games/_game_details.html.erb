@@ -1,0 +1,26 @@
+<h4 class="text-center">Game details</h4>
+<%= form_for(@game, remote: true) do |f| %>
+    <div class="form-group">
+      <%= f.label :white_player %>
+      <%= f.text_field :white_player, class: "form-control", placeholder: "White player", autofocus: true, readonly: true %>
+    </div>
+    <div class="form-group">
+      <%= f.label :black_player %>
+      <%= f.text_field :black_player, class: "form-control", placeholder: "Black player", readonly: true %>
+    </div>
+    <div class="form-group">
+      <%= f.label :result %>
+      <%= f.text_field :result, class: "form-control", placeholder: "Result", readonly: true %>
+    </div>
+     <div class="form-group">
+      <%= f.label :event %>
+      <%= f.text_field :event, class: "form-control", placeholder: "Event", readonly: true %>
+    </div>
+    <div class="form-group">
+      <%= f.label :opening %>
+      <%= f.text_field :opening, class: "form-control", placeholder: "Opening", readonly: true %>
+    </div>
+    <div class="form-group">
+      <%= link_to "Edit game details", edit_game_url(@game.id), remote: true, class: "btn btn-default btn-block" %>
+    </div>
+  <% end %>

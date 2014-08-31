@@ -1,0 +1,17 @@
+<% if @game.owner == current_user %>
+  <%= form_tag review_game_url(@game.id), method: :get, remote: true, class: "pull-right", id: "coachModeForm" do %>
+    <%= hidden_field_tag :change_coach_mode, "true" %>
+    <%= label_tag do %>
+      Teacher mode
+      <%= check_box_tag :coach_mode, true, @game.coach_mode, class: "ios-switch green bigswitch" %>
+      <div class="coach-mode-first-div">
+        <div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% else %>
+  <span class="pull-right">Teacher mode is <%= @coachModeStatus %></span>
+<% end %>
+
+<%= link_to "<i class=\"fa fa-info-circle\"></i>".html_safe, "#", class: "pull-right coach-mode-info", data: {toggle: "popover", content: "Teacher mode is a setting where the creator of the game can make himself/herself the only user who can effect the board", placement: "left"} %>

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get "/games/manual_upload" => "games#manual", as: :manual_upload
 
-  resources :games, except: [:index, :edit] do
+  resources :games, except: [:index] do
     member { get :review }
   end
 

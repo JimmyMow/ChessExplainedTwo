@@ -3,28 +3,13 @@
 <input type='hidden' data-coach=<%= @game.coach_mode %> id="coach_mode_status">
 
 <div class="coach-mode-container">
-  <% if @game.owner == current_user %>
-    <%= form_tag review_game_url(@game.id), method: :get, remote: true, class: "pull-right", id: "coachModeForm" do %>
-      <%= hidden_field_tag :change_coach_mode, "true" %>
-      <%= label_tag do %>
-        Teacher mode
-        <%= check_box_tag :coach_mode, true, @game.coach_mode, class: "ios-switch green bigswitch" %>
-        <div class="coach-mode-first-div">
-          <div>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-  <% else %>
-    <span class="pull-right">Teacher mode is <%= @coachModeStatus %></span>
-  <% end %>
-
-  <%= link_to "<i class=\"fa fa-info-circle\"></i>".html_safe, "#", class: "pull-right coach-mode-info", data: {toggle: "popover", content: "Coach mode is a setting where the creator of the game make himself/herself the only user who can effect the board", placement: "left"} %>
+  <%= render 'coach_mode_form' %>
 </div>
 
   <ul class="nav nav-tabs col-sm-9 review-nav" role="tablist">
     <li class="active"><a href="#review" role="tab" data-toggle="tab">Review</a></li>
     <li><a href="#sandbox" role="tab" data-toggle="tab">Sandbox</a></li>
+    <li><a href="#details" role="tab" data-toggle="tab">Details</a></li>
   </ul>
   <div class="tab-content col-sm-9">
     <div class="tab-pane fade in active" id="review">
@@ -92,7 +77,13 @@
         <div id="sandboxBoard" style="width: 425px"></div>
       </div>
     </div>
+    <div class="tab-pane fade in" id="details">
+      <div class="details-form-container col-sm-8 col-sm-offset-2">
+        <%= render 'game_details' %>
+      </div>
+    </div>
   </div>
+
 
   <div class="video-chat text-center col-sm-3">
     <div id="youPublisher" class='video-box'></div>

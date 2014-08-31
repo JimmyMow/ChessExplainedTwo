@@ -43,6 +43,9 @@ class GamesController < ApplicationController
 
   # GET /games/1/edit
   def edit
+    respond_to do |format|
+     format.js
+    end
   end
 
   # POST /games
@@ -73,6 +76,7 @@ class GamesController < ApplicationController
       if @game.update(game_params)
         format.html { redirect_to @game, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
+        format.js
       else
         format.html { render :edit }
         format.json { render json: @game.errors, status: :unprocessable_entity }
@@ -111,6 +115,6 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.require(:game).permit(:moves)
+      params.require(:game).permit(:moves, :white_player, :white_rating, :black_player, :black_rating, :result, :event, :opening)
     end
 end
