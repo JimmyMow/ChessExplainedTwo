@@ -33,7 +33,8 @@ WebsocketRails.setup do |config|
   if ENV["RAILS_ENV"] == 'production'
     another_uri = URI.parse(ENV["REDISTOGO_URL"])
         config.redis_options = {
-            host: ENV["REDISTOGO_URL"],
+            password: another_uri.password,
+            host: another_uri.host,
             port: another_uri.port
         }
     else
