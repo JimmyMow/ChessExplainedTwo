@@ -29,8 +29,19 @@ WebsocketRails.setup do |config|
   # Uncomment and edit to point to a different redis instance.
   # Will not be used unless standalone or synchronization mode
   # is enabled.
-  port = ENV["REDISTOGO_URL"] || '6379'
-  config.redis_options = {:host => 'localhost', :port => port}
+  # config.redis_options = {:host => 'localhost', :port => '6379'}
+  if ENV["RAILS_ENV"] == 'production'
+    another_uri = URI.parse(ENV["REDISTOGO_URL"])
+        config.redis_options = {
+            host: ENV["REDISTOGO_URL"],
+            port: another_uri.port
+        }
+    else
+        config.redis_options = {
+            host: 'localhost',
+            port: '6379'
+        }
+    end
 
   # By default, all subscribers in to a channel will be removed
   # when that channel is made private. If you don't wish active
