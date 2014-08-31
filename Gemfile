@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
+
+# Redis
+gem "redis", "~> 3.0.1"
+gem "hiredis", "~> 0.4.5"
 # Video Chat
 gem "opentok", "~> 2.2"
 
