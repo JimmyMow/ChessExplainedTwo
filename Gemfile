@@ -1,9 +1,5 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
-
-# DB pushing to all Wbesocket channels (The multiple dynos)
-# gem 'redis'
-
 # Video Chat
 gem "opentok", "~> 2.2"
 
