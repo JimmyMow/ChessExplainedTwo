@@ -1,57 +1,98 @@
-<div class="background">
-  <header>
-    <h1 class="text-center">ChessExplained</h1>
-    <p class="header-description text-center">Learn, have fun, and expierence the game of chess with anyone interactively — over the internet.</p>
-  </header>
-
-  <div class="get-started-container col-sm-4 col-sm-offset-4">
-    <%= link_to "Get started", new_user_registration_url, class: "btn btn-default btn-block" %>
-  </div>
-</div>
-
+<nav class='clearfix'>
+  <ul class="right nav-list">
+    <li>
+      <%= mail_to '', 'Share ChessExplained',
+        subject:  "Yo check out this new chess site",
+        body: "www.chessexplainedapp.com",
+        class: "share-chess-explained"
+      %>
+    </li>
+    <li class="log-in"><%= link_to "Login", new_user_session_url %></li>
+  </ul>
+</nav>
 <div class="container">
-  <div class="row how-it-works">
-    <h3 class="text-center">How it works</h3>
-      <div class="col-sm-4 step text-center">
-        <h4>Upload your game</h4>
-        <p class="how-it-works-description">
-          Uploading your game onto ChessExplained is easy. Simply enter the PGN, or manually play out the game.
-        </p>
-      </div>
-      <div class="col-sm-4 step text-center">
-        <h4>Invite your friends or coaches</h4>
-        <p class="how-it-works-description">
-          Once you've uploaded your game you can now share the url with whoever you want so they can enter your game room.
-        </p>
-      </div>
-      <div class="col-sm-4 step text-center">
-        <h4>Learn and have fun</h4>
-        <p class="how-it-works-description">
-          You can now review the game, test variations, play in the sandbox mode, and have the luxiory of video chat for cumminication with everyone in your game room. All on 1 screen. The perfect learning environment, and it's pretty fun too.
-        </p>
-      </div>
-  </div>
-
-  <div class="row schedule-a-lesson">
-    <h3 class="text-center">Schedule a time to review chess with us</h3>
-    <div class="mallers text-center col-sm-6">
-      <section>
-        <h4>Jack Mallers</h4>
-        <p class="teacher-description">
-          Jack Mallers is the founder of ChessExplained. He has a love for chess, and expierence teaching. His USCF rating is 1918, and he has a 2228 online rating.
-        </p>
-      <%= link_to "Schedule a time to review chess with Mallers", "#", class: "btn btn-primary btn-md" %>
-      </section>
+  <section class="intro">
+    <div class="intro-titles">
+      <h1 class="text-center">Become a better chess player with ChessExplained</h1>
+      <h4 class="text-center">The best online platform for chess players to learn and have have fun with others</h4>
     </div>
 
-    <div class="hanson text-center col-sm-6">
-      <section>
-        <h4>Jack Hanson</h4>
-        <p class="teacher-description">
-          Jack Hanson has been playing chess since he was a kid. His USCF rating is 1800, and his online rating is 1850.
-        </p>
-        <%= link_to "Schedule a time to review chess with Hanson", "#", class: "btn btn-primary btn-md" %>
-      </section>
+    <div class="intro-action-container text-center">
+      <%= link_to "Get started", new_user_registration_url, class: "btn btn-primary btn-lg" %>
     </div>
-  </div>
+    <div class="quote">
+      <h5 class="text-center">&#8220;ChessExplained is revolutionizing the way we expierence and learn chess.&#8221;</h5>
+    </div>
+  </section>
+
+  <hr class="divider">
+  <section class="learning-chess row landing-block clearfix">
+    <h2>Learning... <span class="greyed-text"> chess</span></h2>
+    <div class="col-sm-6 learning-step">
+      <p>As time goes on technology gets better and things get more accessible. But, at the end of the day we are still people, and the best way to learn is still from another person.</p>
+
+      <p>For us chess players that can be frustrating. Having to find someone better than you, decently close, squeeze them into your schedule, and hopefully have the money to pay for it.</p>
+
+      <p>Goodbye to those days. ChessExplained is a place where you can do all you need on the internet. Options are limitless, your scedule doesn't need to be bent.</p>
+    </div>
+
+    <div class="col-sm-6 king-container text-center">
+      <div class="king">
+        <%= image_tag "king.png", width: 200, height: 200 %>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+  <section class="you-do row landing-block clearfix">
+    <h2>How this works... <span class="greyed-text">just three easy steps</span></h2>
+    <ol class="heroSupplement__list col-sm-5">
+      <li class="heroSupplement__item">
+        <figure class="heroSupplement__listNumber">1</figure>
+        <figcaption class="heroSupplement__listContent">Upload your game with either PGN or manually</figcaption>
+      </li>
+      <li class="heroSupplement__item">
+        <figure class="heroSupplement__listNumber">2</figure>
+        <figcaption class="heroSupplement__listContent">Share your link with your friends and coaches</figcaption>
+      </li>
+      <li class="heroSupplement__item">
+        <figure class="heroSupplement__listNumber">3</figure>
+        <figcaption class="heroSupplement__listContent">Learn and have fun with other players</figcaption>
+      </li>
+    </ol>
+
+    <div class="col-sm-6 schedule-a-time-action-container">
+      <div class="teacher-img text-center">
+        <%= image_tag "screen_shot_one.png", height: 400, width: 700, class: "img-rounded" %>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+  <section class="schedule-a-lesson row landing-block clearfix">
+    <h2>We are chess players too...<span class="greyed-text"> schedule time with us</span></h2>
+    <div class="col-sm-6 learning-step">
+      <p>I love chess. I've been playing the game competitively since I was a kid years old.</p>
+
+      <p>While playing and trying to get better everyday I realized how hard it was to surround yourself in an environment to learn chess. It really hit me when my friend Jack Hanson and I went off to different states for college. I would review Hanson's games a few times a week, and was his coach. When we went to school and weren't physically with eachother it was impossible to review his games and teach him.</p>
+
+      <p>Solving this and helping make learning chess more accessible has been my vision for a long time, especially since I couldn't review chess with my friends anymore. Now I have <%= link_to "learned the skills", "https://signalvnoise.com/posts/3771-jack-mallers-from-dropout-to-starter", target: "_blank" %> to make it a reality. If you want to review some games, learn, or teach me, please schedule a time.</p>
+    </div>
+
+    <div class="col-sm-6 schedule-a-time-action-container">
+      <div class="teacher-img text-center">
+        <%= image_tag "mallers.jpg", height: 300, width: 150, class: "img-rounded" %>
+      </div>
+      <div class="teacher-description">
+        <ul>
+          <li>USCF: 1918</li>
+          <li>Chesscube(JimmyMow): 2219</li>
+          <li>Lichess(JimmyMow): 2139</li>
+        </ul>
+      </div>
+      <div class="schedule-action">
+        <%= link_to "Schedule a time with me", "#", class: "btn btn-default btn-block" %>
+      </div>
+    </div>
+  </section>
 </div>

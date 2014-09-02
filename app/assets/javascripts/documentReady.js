@@ -40,5 +40,6 @@ $(document).ready(function() {
   // Root page
   if(App.config.isHome) {
     scheduleMinHeight();
+    landingPageStyles();
   }
 });

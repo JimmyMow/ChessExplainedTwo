@@ -1,82 +1,155 @@
-/* Default styles */
-h1 {
-  font-weight: 400;
-  font-family: "Lato";
-  margin-top: 0;
-  padding-top: 20px;
+.divider {
+  margin: 25px 0;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+/*Nav*/
+.log-in {
+  border-left: 1px solid black;
 }
 
-h3 {
-  font-weight: 300;
-  font-size: 20px;
-  color: rgba(0, 0, 0, .65);
-  margin-bottom: 25px;
-}
-/* Not signed in */
-.get-started-container {
-  text-align: center;
-  margin-top: 10%;
+.right {
+  float: right;
 }
 
-.get-started {
-  text-transform: uppercase;
-  font-family: "Lato";
+nav > ul {
+  margin: 20px;
 }
 
-.background {
-  background: url("http://images2.alphacoders.com/717/71792.jpg") no-repeat center center fixed;
-  background-size: cover;
-  height: 600px;
-}
-
-.header-description {
-  display: block;
-  padding: 0 0 0.6em 0.1em;
-  font-size: 22px;
-  color: white;
-  font-family: "Lato";
-  font-weight: 300;
-}
-
-.schedule-a-lesson, .how-it-works {
-  border-bottom: 1px solid #ccc;
+nav > ul > li {
+  display: inline-block;
   padding: 10px;
 }
 
-.schedule-a-lesson > h2, .how-it-works > h2 {
-  margin-bottom: 20px;
+nav > ul > li > a {
+  text-decoration: none;
+  font-size: 18px;
+  /*text-transform: uppercase;*/
+  font-weight: 200;
+}
+
+/*Intro*/
+.intro {
+
+}
+
+.intro-titles {
+  margin: 0 auto;
+}
+
+.intro-titles > h1 {
+  margin-top: 50px;
+}
+
+.intro-titles > h4 {
+  margin: 20px;
+  color: #bdc3c7;
+}
+
+.intro-action-container {
+  margin-top: 50px;
+}
+
+.intro-action-container > a {
+
+}
+
+.quote {
+  margin-top: 50px;
+}
+
+.quote > h5 {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 27px;
+}
+
+/*Learning*/
+.king-container {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  top: 50px;
+}
+
+.king {
+
+}
+
+/*Steps*/
+.landing-block {
+  margin: 0 40px;
+}
+
+.you-do {
+}
+
+.learning-step {
+  padding: 10px 0;
+}
+
+.learning-step > p {
+  padding: 10px 0;
+  font-weight: 200;
+  line-height: 27px;
+  font-size: 18px;
+}
+
+.you-do > ol {
+  padding: 10px 0;
+}
+
+.you-do > ol > li {
+  list-style-type: none;
+  line-height: 27px;
+  margin: 20px 0;
+}
+
+.heroSupplement__item {
+  position: relative;
+  padding: 20px;
+  display: inline-block;
+}
+
+figure {
+  font-size: 18px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  margin: 0;
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid #bdc3c7;
+  color: black;
+  text-align: center;
+  line-height: 46px;
+  font-weight: 200;
+  vertical-align: middle;
+}
+
+figcaption {
+  font-size: 18px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -15px;
+  padding-left: 40px;
+  line-height: normal;
+  font-weight: 200;
+}
+
+/*Schedule a time*/
+.schedule-a-time-action-container {
+  /*margin-left: 8%;*/
 }
 
 .teacher-description {
-  text-align: left;
-  min-height: 60px;
+  margin-top: 10px;
 }
 
-.how-it-works-description {
-  text-align: left;
-}
-
-/* Signed in */
-.upload-img {
-  width: 100%;
-  height: 300px;
-}
-
-.upload-options {
-  margin-top: 20px;
-}
-
-.upload-options-container {
-  padding-bottom: 25px;
-  border-bottom: 1px solid #ccc;
-}
-
-.schedule-options-container {
-  margin-top: 50px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 25px;
-}
-
-.description {
-  text-align: left;
+.teacher-description > ul > li {
+  font-size: 18px;
+  font-weight: 200;
 }
