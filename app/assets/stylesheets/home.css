@@ -130,6 +130,10 @@ figure {
   vertical-align: middle;
 }
 
+figure::hover {
+  border-width: 8px;
+}
+
 figcaption {
   font-size: 18px;
   display: inline-block;

@@ -1,0 +1,12 @@
+.actions {
+  width: 20%;
+  margin: 0 auto;
+}
+
+.new_game {
+  margin-top: 50px;
+}
+
+.new_game > h4 {
+  font-weight: 200;
+}

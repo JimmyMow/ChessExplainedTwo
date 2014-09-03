@@ -38,7 +38,7 @@
 
     <div class="col-sm-6 king-container text-center">
       <div class="king">
-        <%= image_tag "king.png", width: 200, height: 200 %>
+        <%= image_tag "king.png", width: 200, height: 200, class: "img-responsive" %>
       </div>
     </div>
   </section>
@@ -61,10 +61,8 @@
       </li>
     </ol>
 
-    <div class="col-sm-6 schedule-a-time-action-container">
-      <div class="teacher-img text-center">
-        <%= image_tag "screen_shot_one.png", height: 400, width: 700, class: "img-rounded" %>
-      </div>
+    <div class="col-sm-6 screenshot-container">
+      <%= image_tag "screen_shot_one.png", height: 400, class: "img-responsive" %>
     </div>
   </section>
 
@@ -81,7 +79,7 @@
 
     <div class="col-sm-6 schedule-a-time-action-container">
       <div class="teacher-img text-center">
-        <%= image_tag "mallers.jpg", height: 300, width: 150, class: "img-rounded" %>
+        <%= image_tag "mallers.jpg", height: 300, width: 150, class: "img-rounded img-responsive" %>
       </div>
       <div class="teacher-description">
         <ul>
@@ -95,4 +93,9 @@
       </div>
     </div>
   </section>
+
+  <hr class="divider">
+  <footer class="text-center">
+    Made by <%= link_to "a kid", "https://twitter.com/JackMallers", target: "_blank" %> who <i class="fa fa-heart"></i> chess
+  </footer>
 </div>

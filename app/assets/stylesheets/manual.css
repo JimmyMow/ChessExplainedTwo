@@ -2,6 +2,10 @@
   border-bottom: 1px solid #ccc;
 }
 
+.manual-pgn > p {
+  text-align: left;
+}
+
   #manualBoard {
     display: inline-block;
   }

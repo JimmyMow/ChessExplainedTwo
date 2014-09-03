@@ -1,51 +1,37 @@
 <div class="container">
-  <div class="row col-sm-12 upload-options-container">
-    <h1 class="text-center">Upload a game</h1>
-    <p class="help-block text-center">Upload moves on your own and invite friends and coaches to review and collab with you</p>
+  <div class="row">
+    <h2 class="section-subhead">Upload your game</h2>
 
-    <div class="upload-options">
-      <section class="col-sm-6">
-        <div class="call-to-action text-center">
-          <h3 class="text-center">Upload your game by enetering it's <%= link_to "PGN", "http://en.wikipedia.org/wiki/Portable_Game_Notation", target: "_blank" %></h3>
-          <%= link_to "Upload my game with PGN", new_game_url, class: "btn btn-default btn-block" %>
-        </div>
-      </section>
+      <ol class="heroSupplement__list">
+        <li class="heroSupplement__item col-sm-6">
+          <figure class="heroSupplement__listNumber">1</figure>
+          <figcaption class="heroSupplement__listContent">You can upload your game with <%= link_to "PGN", "http://en.wikipedia.org/wiki/Portable_Game_Notation", target: "_blank" %>. Simply paste the PGN into the text box and click submit.</figcaption>
 
-      <section class="col-sm-6">
-        <h3 class="text-center">Upload your game by playing out the moves</h3>
-        <div class="call-to-action text-center">
-          <%= link_to "Upload my game manually", manual_upload_url, class: "btn btn-default btn-block" %>
-        </div>
-      </section>
+          <div class="upload-img-container text-center">
+            <%= image_tag "upload_pgn.png", height: 200, class: "img-responsive" %>
+          </div>
 
-    </div>
+          <div class="upload-action col-sm-6 col-sm-offset-3">
+            <%= link_to "Upload a new game with PGN", new_game_url, class: "btn btn-default btn-block" %>
+          </div>
+        </li>
+
+        <li class="heroSupplement__item col-sm-6">
+          <figure class="heroSupplement__listNumber">2</figure>
+          <figcaption class="heroSupplement__listContent">You can upload your game manually. Simply play out the moves of your game and click submit.</figcaption>
+
+          <div class="upload-img-container text-center">
+            <%= image_tag "upload_manual.png", height: 200, class: "img-responsive" %>
+          </div>
+
+          <div class="upload-action col-sm-6 col-sm-offset-3">
+            <%= link_to "Upload a new game with PGN", manual_upload_url, class: "btn btn-default btn-block" %>
+          </div>
+        </li>
+      </ol>
+
   </div>
 
-  <div class="row col-sm-12 schedule-options-container">
-    <h1 class="text-center">Schedule a time with us</h1>
-    <p class="help-block text-center">Need help getting started or someone to review with? We would love to schedule a time to review with you</p>
-    <div class="schedule-options">
-      <section class="col-sm-6">
-        <div class="call-to-action text-center">
-          <h3 class="text-center">Jack Mallers (USCF 1918)</h3>
-          <p class="description">
-            Mallers is the founder of ChessExplained, and also an avid chess player. He hasn't played in a rated tournament in over a year due to his commitment to <%= link_to "learning how to code", "https://signalvnoise.com/posts/3771-jack-mallers-from-dropout-to-starter", target: "_blank" %>, but still holds an above 2200 online rating. He has a IL state championship, and years of teaching expierence.
-          </p>
-          <%= link_to "Schedule a time with Mallers", new_game_url, class: "btn btn-default btn-block" %>
-        </div>
-      </section>
-
-      <section class="col-sm-6">
-        <h3 class="text-center">Jack Hanson (USCF 1834)</h3>
-        <p class="description">
-          Hanson has been playing chess since he was a kid. His game really started to elevate a few years ago in high school, where him and Mallers helped their high school to second in IL.
-        </p>
-        <div class="call-to-action text-center">
-          <%= link_to "Schedule a time with Hanson", manual_upload_url, class: "btn btn-default btn-block" %>
-        </div>
-      </section>
-
-    </div>
-  </div>
+  <hr class="divider">
 </div>
 

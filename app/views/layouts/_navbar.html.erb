@@ -1,6 +1,9 @@
 <ul class="nav nav-pills">
     <% if user_signed_in? %>
       <li class="<%= 'active' if current_page?(root_url) %>"><%= link_to "Home".html_safe, root_url %></li>
+      <li><%#= link_to "Upload a game", "#" %></li>
+      <li><%#= link_to "Schedule a time to review", "#" %></li>
+      <li><%#= link_to "See online users", "#" %></li>
       <li class="pull-right">
         <%= link_to "Sign out", destroy_user_session_url, method: :delete %>
       </li>

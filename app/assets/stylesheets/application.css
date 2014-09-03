@@ -18,6 +18,7 @@
 /*Global*/
 body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: 200;
 }
 
 a {
@@ -37,5 +38,30 @@ a {
 
 .text-center {
   text-align: center;
+}
+
+
+/*Overriding bootstrap pills*/
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  background-color: white;
+  color: #049cdb;
+  border-bottom: 3px solid black;
+  border-radius: 0;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+  background-color: white;
+  color: #049cdb;
+  border-bottom: 3px solid #bdc3c7;
+  border-radius: 0;
+}
+
+.nav > li > a {
+  background-color: white;
+  color: #049cdb;
+  border-radius: 0;
+  transition: border-color .1s ease-in-out;
+  -webkit-transition: border-color .5s ease-in-out;
+  border-bottom: 3px solid transparent;
 }
 
