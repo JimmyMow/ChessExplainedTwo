@@ -7,6 +7,7 @@ class InvitationsController < ApplicationController
         format.js
       else
         format.html { redirect_to :back }
+      end
     end
   end
 
