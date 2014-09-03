@@ -11,6 +11,7 @@
     isGame: <%= current_page?(game_url(params[:id] || 1)) %> || <%= current_page?(review_game_url(params[:id] || 1)) %>,
     isReview: <%= current_page?(review_game_url(params[:id] || 1)) %>,
     isManual: <%= current_page?(manual_upload_url) %>,
+    isUsers: <%= current_page?(users_url) %>,
     isHome: <%= current_page?(root_url) %>,
     gameId: <%= @game.try(:id) || "null" %>,
     isNewGame: <%= current_page?(new_game_url) %>,

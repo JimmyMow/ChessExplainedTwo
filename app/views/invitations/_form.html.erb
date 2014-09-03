@@ -1,0 +1,7 @@
+<%= form_for(Invitation.new, remote: true) do |f| %>
+  <%= f.hidden_field :game_id, value: @game.id %>
+  <%= f.hidden_field :inviter_id, value: current_user.id %>
+  <%= f.select :invited_id, options_from_collection_for_select(User.all, :id, :email) %>
+
+  <%= f.submit "Invite" %>
+<% end %>

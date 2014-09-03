@@ -5,5 +5,4 @@ var landingPageStyles = function() {
 
   var learningChessHeight = $(".learning-chess").height();
   $(".king-container").css({"top": learningChessHeight/8 + "px"});
-  console.log(learningChessHeight);
 };

@@ -42,7 +42,7 @@ a {
 
 
 /*Overriding bootstrap pills*/
-.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+/*.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
   background-color: white;
   color: #049cdb;
   border-bottom: 3px solid black;
@@ -63,7 +63,7 @@ a {
   transition: border-color .1s ease-in-out;
   -webkit-transition: border-color .5s ease-in-out;
   border-bottom: 3px solid transparent;
-}
+}*/
 
 /*Overriding bootstrap responsive img*/
 .img-responsive {

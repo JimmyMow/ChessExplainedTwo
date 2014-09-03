@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  userBindEvents();
 
   // GAME/NEW
   if (App.config.isNewGame) {
@@ -35,6 +36,10 @@ $(document).ready(function() {
   if(App.config.isManual) {
     manualBoardInitialization();
     manualDomHandlers();
+  }
+
+  if(App.config.isUsers) {
+
   }
 
   // Root page

@@ -1,8 +1,10 @@
 WebsocketRails::EventMap.describe do
   # The :client_connected method is fired automatically when a new client connects
-  # subscribe :client_connected, :to => WebsocketHomeController, :with_method => :client_connected
-  # The :client_disconnected method is fired automatically when a client disconnects
-  # subscribe :client_disconnected, :to => WebsocketHomeController, :with_method => :delete_user
+  subscribe :client_connected, :to => WebsocketHomeController, :with_method => :client_connected
+  # # The :client_disconnected method is fired automatically when a client disconnects
+  subscribe :client_disconnected, :to => WebsocketHomeController, :with_method => :delete_user
+
+  subscribe :new_user, :to => WebsocketHomeController, :with_method => :new_user
 
   namespace :board do
     subscribe :position_board, :to => WebsocketGamesController, :with_method => :position_board
