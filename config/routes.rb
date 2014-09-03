@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end
 
   devise_for :users
+  resources :users, only: [:index]
 
   resource :analysis, only: [:create]
   root to: "pages#home"
