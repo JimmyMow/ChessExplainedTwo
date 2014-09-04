@@ -4,7 +4,6 @@ var userBindEvents = function() {
   }
 
   App.dispatcher.bind("user_list", function(data) {
-    console.log(data);
     if(data.length > 0) {
       var html = "";
       data.forEach(function(item, index) {

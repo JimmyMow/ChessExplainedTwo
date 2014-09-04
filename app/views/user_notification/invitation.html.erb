@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+  <h1>Hey!</h1>
+
+  <p>
+    Good news my friend, <%= @inviter_user %> has invited you to review some chess.
+  </p>
+
+  <p>
+    It is scheduled at <%= @time %>. To let <%= @inviter_user %> know if this works for you, want to suggest a diferent time, or go to the game, click <%= link_to "here", invitation_url(@invitation) %>
+  </p>
+</body>
+</html>

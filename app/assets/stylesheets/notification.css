@@ -1,0 +1,42 @@
+.notification-outter {
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 20px;
+  width: 25%;
+  border-radius: 5px;
+}
+
+.notification-close > a > i {
+  display: none;
+}
+
+.open {
+  display: block;
+}
+
+.notification-content {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: normal;
+}
+
+.notification-active {
+  background-color: rgba(48,192,251, 1);
+  padding: 10px;
+}
+
+.notification-close-active > a, .notification-close-active > a > i {
+  display: inline;
+}
+
+.notification-close {
+  display: block;
+  text-align: right;
+}
+
+.notification-close > a:hover {
+  color: white;
+  text-decoration: none;
+}

@@ -46,7 +46,7 @@
   <hr class="divider">
   <section class="you-do row landing-block clearfix">
     <h2>How this works... <span class="greyed-text">just three easy steps</span></h2>
-    <ol class="heroSupplement__list col-sm-5">
+    <ol class="heroSupplement__list col-sm-4">
       <li class="heroSupplement__item">
         <figure class="heroSupplement__listNumber">1</figure>
         <figcaption class="heroSupplement__listContent">Upload your game with either PGN or manually</figcaption>
@@ -61,7 +61,7 @@
       </li>
     </ol>
 
-    <div class="col-sm-6 screenshot-container">
+    <div class="col-sm-8 screenshot-container">
       <%= image_tag "screen_shot_one.png", height: 400, class: "img-responsive" %>
     </div>
   </section>
@@ -70,11 +70,11 @@
   <section class="schedule-a-lesson row landing-block clearfix">
     <h2>We are chess players too...<span class="greyed-text"> schedule time with us</span></h2>
     <div class="col-sm-6 learning-step">
-      <p>I love chess. I've been playing the game competitively since I was a kid years old.</p>
+      <p>I love chess. I've been playing the game competitively since I was a kid.</p>
 
-      <p>While playing and trying to get better everyday I realized how hard it was to surround yourself in an environment to learn chess. It really hit me when my friend Jack Hanson and I went off to different states for college. I would review Hanson's games a few times a week, and was his coach. When we went to school and weren't physically with eachother it was impossible to review his games and teach him.</p>
+      <p>While playing and trying to get better everyday I realized how hard it was to surround yourself in an environment to learn chess. It really hit me when my friend Jack Hanson and I went off to different states for college. I was actually the coach this time around. I would review Hanson's games a few times a week and help him get better. When we went to school and weren't physically with eachother it was impossible to review his games and teach him.</p>
 
-      <p>Solving this and helping make learning chess more accessible has been my vision for a long time, especially since I couldn't review chess with my friends anymore. Now I have <%= link_to "learned the skills", "https://signalvnoise.com/posts/3771-jack-mallers-from-dropout-to-starter", target: "_blank" %> to make it a reality. If you want to review some games, learn, or teach me, please schedule a time.</p>
+      <p>Solving this and helping make learning chess more accessible has been my vision for a long time, especially since I couldn't review chess with my friends anymore. Now I have <%= link_to "learned the skills", "https://signalvnoise.com/posts/3771-jack-mallers-from-dropout-to-starter", target: "_blank" %> to make it a reality. If you want to review some games, learn, or teach me, I would love it if you schedule some time with me.</p>
     </div>
 
     <div class="col-sm-6 schedule-a-time-action-container">
@@ -89,13 +89,47 @@
         </ul>
       </div>
       <div class="schedule-action">
-        <%= link_to "Schedule a time with me", "#", class: "btn btn-default btn-block" %>
+        <%= link_to "Schedule a time with me", "#", class: "btn btn-default btn-block", data: {toggle: "modal", target: "#inviteMallersHome"} %>
+      </div>
+
+      <div class="modal fade notification-modal" id="inviteMallersHome" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" id="closeVariation" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="inviteMallersHomeLabel">Set up a time to review chess with Jack</h4>
+          </div>
+          <div class="modal-body text-center">
+            <%= form_for(Invitation.new, remote: true) do |f| %>
+
+              <div class="form-group">
+                <%#= f.label :inviter, "Your email" %>
+                <%= f.text_field :inviter, placeholder: "Your email", class: "form-control"  %>
+              </div>
+
+              <div class="form-group">
+                <p class="help-block">*Time is in CT (Central Time)*</p>
+                <%= f.datetime_select :scheduled_at, :ampm => true, :minute_step => 15 %>
+              </div>
+
+              <%= f.hidden_field :invited_id, value: @jack_mallers.id %>
+
+              <%= f.button "Schedule this time to review", class: "btn btn-primary btn-block", data: {disable_with: "<i class=\"fa fa-spinner fa-spin\"></i> Loading..."} %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
+    </div>
+
+
   </section>
+
+  <%= render "layouts/notification" %>
 
   <hr class="divider">
   <footer class="text-center">
     Made by <%= link_to "a kid", "https://twitter.com/JackMallers", target: "_blank" %> who <i class="fa fa-heart"></i> chess
   </footer>
 </div>
+

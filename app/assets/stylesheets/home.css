@@ -69,7 +69,6 @@ nav > ul > li > a {
   display: inline-block;
   vertical-align: middle;
   position: relative;
-  top: 50px;
 }
 
 .king {
@@ -81,7 +80,8 @@ nav > ul > li > a {
   margin: 0 40px;
 }
 
-.you-do {
+.screenshot-container > img {
+  width: 100%;
 }
 
 .learning-step {
@@ -156,4 +156,15 @@ figcaption {
 .teacher-description > ul > li {
   font-size: 18px;
   font-weight: 200;
+}
+
+
+
+
+/*Media query*/
+
+@media (max-width: 845px) {
+  .king-container {
+    top: 0 !important;
+  }
 }

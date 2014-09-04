@@ -1,4 +1,7 @@
 $(document).ready(function() {
+  // Notification
+  notificationDomHandlers();
+
   userBindEvents();
 
   // GAME/NEW
