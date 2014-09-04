@@ -1,7 +1,8 @@
 class UserNotification < ActionMailer::Base
   default from: "jack@chessexplainedapp.com"
 
-  def invitation(invitation, email_address)
+  def invitation(invitation_id, email_address)
+    invitation = invitation.find(invitation_id)
     @inviter_user = email_address
     @invited_user = invitation.invited
     @game = invitation.game
