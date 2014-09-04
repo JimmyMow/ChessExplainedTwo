@@ -5,7 +5,7 @@ class InvitationsController < ApplicationController
     respond_to do |format|
       if @invitation.save
         email_address = @invitation.inviter || params[:invitation][:inviter]
-        UserNotification.delay.invitation(@invitation, email_address).deliver
+        UserNotification.delay.invitation(@invitation, email_address)
         format.js
       else
         format.html { redirect_to :back }
