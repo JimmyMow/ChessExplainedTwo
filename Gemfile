@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
+# Background jobs
+gem 'sidekiq'
 # Redis
 gem "redis", "~> 3.0.1"
 gem "hiredis", "~> 0.4.5"

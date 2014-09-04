@@ -11,7 +11,7 @@
   </p>
 
   <p>
-    It is scheduled at <%= @time %>. To let <%= @inviter_user %> know if this works for you, want to suggest a diferent time, or go to the game, click <%= link_to "here", invitation_url(@invitation) %>
+    It is scheduled at <%= @time.strftime("Printed on %m/%d/%Y at %I:%M%p") %>. To let <%= @inviter_user %> know if this works for you, want to suggest a diferent time, or go to the game, click <%= link_to "here", invitation_url(@invitation) %>
   </p>
 </body>
 </html>
