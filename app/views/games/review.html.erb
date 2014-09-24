@@ -2,7 +2,8 @@
 
 <input type='hidden' data-coach=<%= @game.coach_mode %> id="coach_mode_status">
 
-<div class="coach-mode-container clearfix">
+<!-- <div class="coach-mode-container clearfix"> -->
+  <p class="share-url-message">Share this URL (<span class='url'><%= review_game_url(@game) %></span>) with anyone! Anyone at this URL can review this game and video chat with you. </p>
   <%#= link_to "Invite people to this game", "#", class: "btn btn-default", data: {toggle: "modal", target: "#invitePeople"} %>
 
   <!-- <div class="modal fade" id="invitePeople" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -20,7 +21,7 @@
     </div>
  -->
   <%= render 'coach_mode_form' %>
-</div>
+<!-- </div> -->
 
   <ul class="nav nav-tabs col-sm-9 review-nav" role="tablist">
     <li class="active"><a href="#review" role="tab" data-toggle="tab">Review</a></li>

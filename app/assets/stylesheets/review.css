@@ -107,3 +107,11 @@
 .coach-mode-first-div {
   display: inline-block;
 }
+
+.url {
+  color: blue;
+}
+
+.share-url-message {
+  display: inline-block;
+}
