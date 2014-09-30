@@ -109,9 +109,11 @@
 }
 
 .url {
-  color: blue;
+  font-style: italic;
+  color: #aaa;
 }
 
-.share-url-message {
-  display: inline-block;
+.game-title {
+  margin: 0;
+  font-size: 18px;
 }

@@ -14,4 +14,23 @@ class Game < ActiveRecord::Base
       move.save
     end
   end
+
+  def create_details(details_array)
+    game_details = JSON.parse(details_array)
+    self.white_player = game_details["White"]
+    self.black_player = game_details["Black"]
+
+    self.white_rating = game_details["WhiteElo"]
+    self.black_rating = game_details["BlackElo"]
+
+    self.opening = game_details["Opening"]
+
+    self.result = game_details["Result"]
+
+    self.event = game_details["Event"]
+  end
+
+
+  #   white_player: string, white_rating: string, black_player: string,
+  #   black_rating: string, result: string, event: string, opening: string)
 end
