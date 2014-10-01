@@ -29,6 +29,7 @@ $(document).ready(function() {
     initializeDomHandlers();
     reviewStyles();
 
+
     $("[data-toggle=popover], .has-popover").popover();
     App.ReviewGame.BOARDS = {};
     App.ReviewGame.BOARDS["sandbox"] = sandboxBoard;

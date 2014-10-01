@@ -23,6 +23,7 @@ var reviewBoardInitialization = function() {
   var cfg = {position: 'start'};
 
   window.reviewBoard = new ChessBoard('reviewBoard', cfg);
+  window.reviewBoard.game = new Chess();
 };
 
 var variationBoardInitialization = function() {
@@ -61,8 +62,6 @@ var initializeBinds = function() {
     if(App.ReviewGame.moveCounter > 0) {
       $("#triggerVariation").attr("disabled", false);
     }
-
-    console.log("here position_board");
   });
 
   channel.bind("trigger_variation", function(data) {
@@ -154,6 +153,9 @@ var initializeDomHandlers = function() {
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
       checkForVariations(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]);
       highlightPgn(App.ReviewGame.moveCounter - 1);
+
+      window.reviewBoard.game.move(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['notation']);
+      prepareAnalysis();
     } else if(App.ReviewGame.moves.length < App.ReviewGame.moveCounter) {
       return false;
     }
@@ -170,6 +172,8 @@ var initializeDomHandlers = function() {
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
       highlightPgn(App.ReviewGame.moveCounter - 1);
 
+      window.reviewBoard.game.undo();
+      prepareAnalysis();
     } else if(App.ReviewGame.moveCounter == 1) {
       if($("#coach_mode_status").attr("data-coach") == "false" || $("#coach_mode_status").attr("data-coach") == "true" && window.isOwner == "true") {
         App.ReviewGame.moveCounter--;
@@ -177,6 +181,9 @@ var initializeDomHandlers = function() {
       adjustMoveCounter(App.ReviewGame.moveCounter, "review");
       App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName, coach_mode: $("#coach_mode_status").attr("data-coach"),
     game_id: App.config.gameId}, success, failure);
+
+      window.reviewBoard.game.clear();
+      prepareAnalysis();
 
     } else {
       return false;

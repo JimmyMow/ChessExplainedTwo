@@ -1,6 +1,7 @@
 var regualarPgnUpload = function() {
     $("#new_game").on('submit', function(e) {
         var original_pgn = $('#game_moves').val().replace(/{[^}]*}/g,'');
+        var original_pgn = original_pgn.replace(/ *\([^)]*\) */g, "");
 
         var words = []
         original_pgn.replace(/\[(.+?)\]/g, function($0, $1) { words.push($1) });
