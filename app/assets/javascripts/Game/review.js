@@ -156,6 +156,7 @@ var initializeDomHandlers = function() {
 
       window.reviewBoard.game.move(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['notation']);
       prepareAnalysis();
+
     } else if(App.ReviewGame.moves.length < App.ReviewGame.moveCounter) {
       return false;
     }
@@ -211,6 +212,10 @@ var initializeDomHandlers = function() {
     game_id: App.config.gameId}, success, failure);
     adjustMoveCounter(0, "review");
     $(".review-notation").removeClass('current-move');
+
+    window.reviewBoard.game.clear();
+    prepareAnalysis();
+
     e.preventDefault();
   });
 
@@ -219,6 +224,10 @@ var initializeDomHandlers = function() {
     positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moves.length - 1]["fen"], "review");
     adjustMoveCounter(App.ReviewGame.moves.length - 1, "review");
     highlightPgn(App.ReviewGame.moveCounter);
+
+    window.reviewBoard.game.load(App.ReviewGame.moves[App.ReviewGame.moves.length -1].fen);
+    prepareAnalysis();
+
     e.preventDefault();
   });
 
