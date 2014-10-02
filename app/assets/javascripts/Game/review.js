@@ -23,7 +23,7 @@ var reviewBoardInitialization = function() {
   var cfg = {position: 'start'};
 
   window.reviewBoard = new ChessBoard('reviewBoard', cfg);
-  window.reviewBoard.game = new Chess();
+  // window.reviewBoard.game = new Chess();
 };
 
 var variationBoardInitialization = function() {
@@ -154,8 +154,8 @@ var initializeDomHandlers = function() {
       checkForVariations(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]);
       highlightPgn(App.ReviewGame.moveCounter - 1);
 
-      window.reviewBoard.game.move(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['notation']);
-      prepareAnalysis();
+      // window.reviewBoard.game.move(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['notation']);
+      // prepareAnalysis();
 
     } else if(App.ReviewGame.moves.length < App.ReviewGame.moveCounter) {
       return false;
@@ -173,8 +173,8 @@ var initializeDomHandlers = function() {
       positionBoardTrigger(App.ReviewGame.moves[App.ReviewGame.moveCounter - 1]['fen'], "review");
       highlightPgn(App.ReviewGame.moveCounter - 1);
 
-      window.reviewBoard.game.undo();
-      prepareAnalysis();
+      // window.reviewBoard.game.undo();
+      // prepareAnalysis();
     } else if(App.ReviewGame.moveCounter == 1) {
       if($("#coach_mode_status").attr("data-coach") == "false" || $("#coach_mode_status").attr("data-coach") == "true" && window.isOwner == "true") {
         App.ReviewGame.moveCounter--;
@@ -183,8 +183,8 @@ var initializeDomHandlers = function() {
       App.dispatcher.trigger('board.start', {board: "review", channel_name: App.config.channelName, coach_mode: $("#coach_mode_status").attr("data-coach"),
     game_id: App.config.gameId}, success, failure);
 
-      window.reviewBoard.game.clear();
-      prepareAnalysis();
+      // window.reviewBoard.game.clear();
+      // prepareAnalysis();
 
     } else {
       return false;
@@ -213,8 +213,8 @@ var initializeDomHandlers = function() {
     adjustMoveCounter(0, "review");
     $(".review-notation").removeClass('current-move');
 
-    window.reviewBoard.game.clear();
-    prepareAnalysis();
+    // window.reviewBoard.game.clear();
+    // prepareAnalysis();
 
     e.preventDefault();
   });
@@ -225,8 +225,8 @@ var initializeDomHandlers = function() {
     adjustMoveCounter(App.ReviewGame.moves.length - 1, "review");
     highlightPgn(App.ReviewGame.moveCounter);
 
-    window.reviewBoard.game.load(App.ReviewGame.moves[App.ReviewGame.moves.length -1].fen);
-    prepareAnalysis();
+    // window.reviewBoard.game.load(App.ReviewGame.moves[App.ReviewGame.moves.length -1].fen);
+    // prepareAnalysis();
 
     e.preventDefault();
   });
