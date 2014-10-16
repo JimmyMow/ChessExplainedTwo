@@ -4,5 +4,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates :handle, uniqueness: true
+
+  validates :handle, presence: true
+  validates :name, presence: true
+
   has_many :games
 end

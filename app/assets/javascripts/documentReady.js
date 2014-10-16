@@ -3,6 +3,7 @@ $(document).ready(function() {
   notificationDomHandlers();
 
   userBindEvents();
+  signUpValidation("new_user");
 
   // GAME/NEW
   if (App.config.isNewGame) {
