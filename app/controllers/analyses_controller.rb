@@ -1,7 +1,7 @@
 class AnalysesController < ApplicationController
   def create
     engine = Stockfish::Engine.new
-
+    #
     @game = Game.find(params[:game_id])
     @game.moves.each do |move|
       output = engine.analyze move.fen, { :movetime => 2000 }
