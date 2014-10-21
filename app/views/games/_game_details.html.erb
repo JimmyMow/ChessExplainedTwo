@@ -20,7 +20,11 @@
       <%= f.label :opening %>
       <%= f.text_field :opening, class: "form-control", placeholder: "Enter opening", readonly: true %>
     </div>
-    <div class="form-group">
-      <%= link_to "Edit game details", edit_game_url(@game.id), remote: true, class: "btn btn-default btn-block" %>
-    </div>
+
+    <% if @game.owner.id == current_user.id %>
+      <div class="form-group">
+        <%= link_to "Edit game details", edit_game_url(@game.id), remote: true, class: "btn btn-default btn-block" %>
+      </div>
+    <% end %>
+
   <% end %>
