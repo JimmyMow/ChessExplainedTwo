@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016203602) do
+ActiveRecord::Schema.define(version: 20141021214811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "conversations", force: true do |t|
+    t.integer  "user_one_id"
+    t.integer  "user_two_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "games", force: true do |t|
     t.integer  "creator_id"
@@ -48,6 +55,7 @@ ActiveRecord::Schema.define(version: 20141016203602) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "conversation_id"
   end
 
   create_table "moves", force: true do |t|
@@ -57,6 +65,14 @@ ActiveRecord::Schema.define(version: 20141016203602) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "eval"
+  end
+
+  create_table "rooms", force: true do |t|
+    t.integer  "owner_id"
+    t.string   "secure_token"
+    t.string   "sessionId"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sandboxes", force: true do |t|

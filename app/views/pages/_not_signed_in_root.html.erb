@@ -100,22 +100,7 @@
             <h4 class="modal-title" id="inviteMallersHomeLabel">Set up a time to review chess with Jack</h4>
           </div>
           <div class="modal-body text-center">
-            <%= form_for(Invitation.new, remote: true) do |f| %>
 
-              <div class="form-group">
-                <%#= f.label :inviter, "Your email" %>
-                <%= f.text_field :inviter, placeholder: "Your email", class: "form-control"  %>
-              </div>
-
-              <div class="form-group">
-                <p class="help-block">*Time is in CT (Central Time)*</p>
-                <%= f.datetime_select :scheduled_at, :ampm => true, :minute_step => 15 %>
-              </div>
-
-              <%= f.hidden_field :invited_id, value: @jack_mallers.id %>
-
-              <%= f.button "Schedule this time to review", class: "btn btn-primary btn-block", data: {disable_with: "<i class=\"fa fa-spinner fa-spin\"></i> Loading..."} %>
-            <% end %>
           </div>
         </div>
       </div>

@@ -9,5 +9,9 @@ class User < ActiveRecord::Base
   validates :handle, presence: true
   validates :name, presence: true
 
-  has_many :games
+  has_many :games, class_name: "Game", foreign_key: "creator_id"
+
+  def is_game_owner?(game)
+    game.creator_id == self.id
+  end
 end

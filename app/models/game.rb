@@ -29,7 +29,4 @@ class Game < ActiveRecord::Base
     self.event = game_details["Event"]
   end
 
-
-  #   white_player: string, white_rating: string, black_player: string,
-  #   black_rating: string, result: string, event: string, opening: string)
 end

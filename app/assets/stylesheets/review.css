@@ -117,3 +117,11 @@
   margin: 0;
   font-size: 18px;
 }
+
+.invitation-btn {
+  margin: 5px;
+}
+
+.modal-dialog-invitation {
+  width: 75%;
+}

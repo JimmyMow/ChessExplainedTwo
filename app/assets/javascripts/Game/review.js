@@ -395,7 +395,8 @@ var success = function() {
 };
 
 var failure = function() {
-  coachModeMessage();
+  // coachModeMessage();
+  console.log("here");
 };
 
 var coachModeMessage = function() {

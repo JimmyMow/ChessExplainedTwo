@@ -1,5 +1,5 @@
 class WebsocketGamesController < WebsocketRails::BaseController
-  before_action :coach_mode
+  # before_action :coach_mode
 
   def position_board
     WebsocketRails[message[:channel_name].to_sym].trigger :position_board, {

@@ -19,6 +19,7 @@ $(document).ready(function() {
 
   // In review mode
   if (App.config.isReview) {
+    window.history.pushState("", "", tokenString);
     App.ReviewGame = {};
     App.ReviewGame.moveCounter = 0;
     reviewBoardInitialization();

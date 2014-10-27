@@ -2,6 +2,7 @@ class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy, :review]
   before_action :authenticate_user!, only: [:create, :update]
   before_action :check_for_user, only: [:new]
+  before_action :check_if_user_or_if_token_present, only: [:review]
 
   # GET /games
   # GET /games.json
@@ -18,6 +19,10 @@ class GamesController < ApplicationController
     config_opentok
     @tok_token = @opentok.generate_token @game.sessionId
     @variation = Variation.new
+
+    @white_rating = @game.white_rating == "?" ? "Unknown rating" : @game.white_rating
+    @black_rating = @game.black_rating == "?" ? "Unknown rating" : @game.black_rating
+
 
 
     if params[:change_coach_mode]
@@ -61,7 +66,7 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.save
         @game.create_moves(params[:game][:moves])
-        format.html { redirect_to review_game_url(@game), notice: 'Awesome! Your game was created. Now share this url with anyone you want to join your game room.' }
+        format.html { redirect_to review_game_url(@game), notice: 'Awesome! Everything seems to have gone smoothly. You can share this url with anyone you want to join you.' }
         format.json { render :show, status: :created, location: @game }
       else
         format.html { render :new }
@@ -117,5 +122,11 @@ class GamesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
       params.require(:game).permit(:moves, :white_player, :white_rating, :black_player, :black_rating, :result, :event, :opening)
+    end
+
+    def check_if_user_or_if_token_present
+       unless params[:token] == @game.sessionId || current_user.try(:is_game_owner?,@game)
+        redirect_to root_url, notice: "You do not have permission to access that game. Ask the user to share their game link with you."
+       end
     end
 end

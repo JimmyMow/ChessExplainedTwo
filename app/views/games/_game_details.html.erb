@@ -21,7 +21,7 @@
       <%= f.text_field :opening, class: "form-control", placeholder: "Enter opening", readonly: true %>
     </div>
 
-    <% if @game.owner.id == current_user.id %>
+    <% if @game.owner.id == current_user.try(:id) %>
       <div class="form-group">
         <%= link_to "Edit game details", edit_game_url(@game.id), remote: true, class: "btn btn-default btn-block" %>
       </div>
