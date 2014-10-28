@@ -15,6 +15,7 @@
     isHome: <%= current_page?(root_url) %>,
     gameId: <%= @game.try(:id) || "null" %>,
     isNewGame: <%= current_page?(new_game_url) %>,
+    isUserShow: <%= current_page?(user_url(params[:id] || 1)) %>,
     channelName: channelNameVar
   }
 </script>

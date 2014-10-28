@@ -4,8 +4,8 @@ var userBindEvents = function() {
   }
 
   App.dispatcher.bind("user_list", function(data) {
-    console.log(data);
     if(data.length > 0) {
+      console.log("yo");
       var html = "";
       data.forEach(function(user) {
         if(user) {
@@ -20,7 +20,6 @@ var userBindEvents = function() {
   });
 
   App.dispatcher.bind("people_count", function(data){
-    console.log(peopleCount)
     var peopleCount = data;
     $("#people-count").empty().append(peopleCount);
   });

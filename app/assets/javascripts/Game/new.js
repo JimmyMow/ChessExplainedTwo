@@ -12,8 +12,6 @@ var regualarPgnUpload = function() {
             detailsObj[word.substr(0,word.indexOf(' '))] = word.substr(word.indexOf(' ')+1);
         });
 
-        $('#game_details').val(JSON.stringify(detailsObj));
-
         var chess = new Chess();
         var loadedResult = chess.load_pgn(original_pgn);
 
@@ -28,6 +26,9 @@ var regualarPgnUpload = function() {
               moveObjects.push( {notation: item, fen: anotherEngine.fen()}  );
             });
 
+            detailsObj["pgn"] = anotherEngine.pgn();
+
+            $('#game_details').val(JSON.stringify(detailsObj));
             $('#game_moves').val(JSON.stringify(moveObjects));
         } else {
             e.preventDefault();

@@ -12,7 +12,11 @@ class WebsocketHomeController < WebsocketRails::BaseController
   end
 
   def new_user
-    connection_store[:online_users] = { user_name: current_user.handle, id: current_user.id } if user_signed_in?
+    if user_signed_in?
+      connection_store[:online_users] = { user_name: current_user.handle, id: current_user.id }
+    else
+      connection_store[:online_users] = nil
+    end
 
     connection_store[:online_people] += 1
 

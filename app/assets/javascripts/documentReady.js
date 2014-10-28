@@ -11,6 +11,11 @@ $(document).ready(function() {
     pgnUploadFormValidation();
   }
 
+  // Users show page
+  if(App.config.isUserShow) {
+    setUpUsersGamesBoard();
+  }
+
 
   // Views with a board
   if (App.config.isGame) {

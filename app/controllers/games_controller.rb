@@ -20,8 +20,8 @@ class GamesController < ApplicationController
     @tok_token = @opentok.generate_token @game.sessionId
     @variation = Variation.new
 
-    @white_rating = @game.white_rating == "?" ? "Unknown rating" : @game.white_rating
-    @black_rating = @game.black_rating == "?" ? "Unknown rating" : @game.black_rating
+    @white_rating = @game.white_rating == "?" ? "No rating" : @game.white_rating
+    @black_rating = @game.black_rating == "?" ? "No rating" : @game.black_rating
 
 
 
@@ -126,7 +126,7 @@ class GamesController < ApplicationController
 
     def check_if_user_or_if_token_present
        unless params[:token] == @game.sessionId || current_user.try(:is_game_owner?,@game)
-        redirect_to root_url, notice: "You do not have permission to access that game. Ask the user to share their game link with you."
+        redirect_to :back, notice: "You do not have permission to access that game. Ask the user to share their game link with you."
        end
     end
 end

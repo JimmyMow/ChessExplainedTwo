@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     member { get :review }
   end
 
-  devise_for :users
+  devise_for :users, controllers: { sessions: "sessions", registrations: "registrations" }
   resources :users, only: [:index, :show]
 
   resource :analysis, only: [:create]

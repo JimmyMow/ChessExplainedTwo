@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
 
   def show
-
+    @games = @user.games.order("created_at DESC").limit(10)
   end
 
   private

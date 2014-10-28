@@ -14,4 +14,14 @@ class User < ActiveRecord::Base
   def is_game_owner?(game)
     game.creator_id == self.id
   end
+
+  def is_now_online
+    self.is_online = true
+    self.save
+  end
+
+  def is_now_offline
+    self.is_online = false
+    self.save
+  end
 end
