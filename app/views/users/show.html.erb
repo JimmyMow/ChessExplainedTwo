@@ -2,6 +2,11 @@
   <div class="show-user-box">
     <i class="fa fa-user fa-3x <%= 'online' if @user.is_online %>"></i>
     <h2 class="show-handle"><%= @user.handle %></h2>
+    <% if @user.is_online %>
+      <small class="online">(online)</small>
+    <% else %>
+      <small>(offline)</small>
+    <% end %>
 
     <div class="show-user-details">
       <span class="show-user-detail">Member since <%= @user.created_at.strftime("%b %d, %Y") %></span>
