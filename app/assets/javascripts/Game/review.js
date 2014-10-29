@@ -514,4 +514,3 @@ var onSnapEnd = function() {
 var updateGameTitle = function(title) {
   $("#gameTitle").append(title);
 };
-
