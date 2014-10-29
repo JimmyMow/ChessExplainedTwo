@@ -314,18 +314,30 @@ var updateVariationBoardMovesArray = function(move, direction, moveNum) {
 // Vidoechat
 var openTokVideoStream = function() {
   var apiKey = "44827272";
-  var guestCounter = 0;
+  var guestCounter = 1;
   var session = OT.initSession(apiKey, sessionId);
   session.on("streamCreated", function(event) {
     $('.video-chat').prepend("<div id='guestPublisher" + guestCounter + "' class='video-box'></div>");
     session.subscribe(event.stream, "guestPublisher" + guestCounter, {width: 200, height: 200});
     guestCounter++;
+
+    // resizeVideoBoxes(guestCounter);
   });
 
   session.connect(token, function(error) {
     var publisher = OT.initPublisher("youPublisher", {name: userVideoName, width: 200, height: 200});
     $("#youPublisher").prependTo(".video-chat");
     session.publish(publisher);
+    // resizeVideoBoxes(guestCounter);
+  });
+};
+
+var resizeVideoBoxes = function(num) {
+  $(".video-box").each(function() {
+    if(num > 2) {
+      $(this).css({"height": "125"});
+      $(this).css({"width": "125"});
+    }
   });
 };
 
@@ -497,5 +509,9 @@ var onSnapEnd = function() {
 
   var move = {fen: variationBoard.fen(), notation: variationBoard.game.history()[variationBoard.game.history().length - 1]};
   updateVariationBoardMovesArray(move, "add", window.variationBoard.game.history().length);
+};
+
+var updateGameTitle = function(title) {
+  $("#gameTitle").append(title);
 };
 

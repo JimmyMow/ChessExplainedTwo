@@ -4,7 +4,6 @@
 
 <input type='hidden' data-coach=<%= @game.coach_mode %> id="coach_mode_status">
 
-<p class="game-title text-center"><%= @game.white_player %>(<small class="text-muted"><%= @white_rating %></small>) vs. <%= @game.black_player %>(<small class="text-muted"><%= @black_rating %></small>)</p>
 <!-- <p id="engineStatus">yooo</p> -->
 
   <ul class="nav nav-tabs col-sm-9 review-nav" role="tablist">
@@ -100,5 +99,6 @@
     var userVideoName = "<%= user_signed_in? ? current_user.email.truncate(12) : 'Anonymous' %>";
     var ownerId = "<%= @game.owner.id %>";
     var isOwner = "<%= @game.owner == current_user ? true : false %>";
+    var gameTitle = "<span class=\"game-title\"><%= @game.white_player %>(<small class=\"text-muted\"><%= @white_rating %></small>) vs. <%= @game.black_player %>(<small class=\"text-muted\"><%= @black_rating %></small>)</span>"
   </script>
 <% end %>

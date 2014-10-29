@@ -35,6 +35,7 @@ $(document).ready(function() {
     initializeBinds();
     initializeDomHandlers();
     reviewStyles();
+    updateGameTitle(gameTitle);
 
 
     $("[data-toggle=popover], .has-popover").popover();

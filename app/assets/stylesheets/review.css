@@ -1,5 +1,6 @@
 .video-box {
   display: inline-block;
+  margin: 1px !important;
 }
 
 .review-nav {
@@ -115,11 +116,14 @@
 
 .game-title {
   margin: 0;
-  font-size: 18px;
+  font-size: 22px;
+  color: black;
+  display: inline-block;
 }
 
 .invitation-btn {
   margin: 5px;
+  padding: 5px;
 }
 
 .modal-dialog-invitation {
