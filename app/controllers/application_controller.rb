@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   helper_method :resource
+  helper_method :redirect_to_back_or_root
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_filter :after_sign_in_path_for
   after_filter :store_location
@@ -34,6 +35,16 @@ class ApplicationController < ActionController::Base
 
   def resource
     @resource ||= User.new
+  end
+
+  def redirect_to_back_or_root(alert)
+    if request.env["HTTP_REFERER"].present? and request.env["HTTP_REFERER"] != request.env["REQUEST_URI"]
+      flash[:alert] = alert
+      redirect_to :back
+    else
+      flash[:alert] = alert
+      redirect_to root_url
+    end
   end
 
 end

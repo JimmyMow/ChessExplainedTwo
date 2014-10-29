@@ -12,7 +12,7 @@
 }
 .navbar {
   min-height:28px !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 0px !important;
 }
 
 .navbar-default .navbar-nav > li > .invitation-btn {
@@ -32,4 +32,8 @@
     text-align: center;
     margin: auto;
     padding: 5px;
+}
+
+.navbar > .nav > .active {
+  background-color: #e7e7e7;
 }

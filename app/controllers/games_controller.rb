@@ -126,7 +126,7 @@ class GamesController < ApplicationController
 
     def check_if_user_or_if_token_present
        unless params[:token] == @game.sessionId || current_user.try(:is_game_owner?,@game)
-        redirect_to :back, notice: "You do not have permission to access that game. Ask the user to share their game link with you."
+        redirect_to_back_or_root("Uh oh! It seems you don't have permission to access that game. Ask the owner to share their invite link with you.")
        end
     end
 end

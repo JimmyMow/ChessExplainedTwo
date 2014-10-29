@@ -1,19 +1,20 @@
+<% if user_signed_in? %>
+  <nav class="navbar navbar-default" role="navigation">
 
+    <% if current_page?(review_game_url(params[:id] || 1)) %>
+      <p class="game-title-wrapper center-text navbar-text" id="gameTitle"></p>
+    <% end %>
 
-<nav class="navbar navbar-default" role="navigation">
-  <p class="game-title-wrapper center-text navbar-text" id="gameTitle"></p>
+    <ul class="nav navbar-nav navbar-left">
+        <li class="<%= 'active' if current_page?(root_url) %>"><%= link_to "Home".html_safe, root_url %></li>
 
-  <ul class="nav navbar-nav navbar-left">
-      <li class="<%= 'active' if current_page?(root_url) %>"><%= link_to "Home".html_safe, root_url %></li>
+        <% if current_page?(review_game_url(params[:id] || 1)) %>
+          <li class="invite-wrapper">
+          <%= link_to "Invite people to review with you", "#", class: "btn btn-info invitation-btn", data: {toggle: "modal", target: "#invitationModal"} %>
+          </li>
+        <% end %>
+    </ul>
 
-      <% if current_page?(review_game_url(params[:id] || 1)) %>
-        <li class="invite-wrapper">
-        <%= link_to "Invite people to review with you", "#", class: "btn btn-info invitation-btn", data: {toggle: "modal", target: "#invitationModal"} %>
-        </li>
-      <% end %>
-  </ul>
-
-  <% if user_signed_in? %>
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown pull-right">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -26,5 +27,5 @@
         </ul>
       </li>
     </ul>
-  <% end %>
-</nav>
+  </nav>
+<% end %>
