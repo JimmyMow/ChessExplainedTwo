@@ -1,0 +1,13 @@
+<div class="container">
+  <h1>Inbox</h1>
+
+  <ul class="index-messages-container">
+    <% @conversations.each do |conversation|  %>
+      <li class="index-message">
+        <%= link_to conversation.subject, user_conversation_url(conversation.user, conversation) %>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= link_to "Create a New Conversation", new_user_conversation_path(@user) %>
+</div>

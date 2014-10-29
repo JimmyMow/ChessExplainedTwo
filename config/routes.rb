@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, controllers: { sessions: "sessions", registrations: "registrations" }
-  resources :users, only: [:index, :show]
+  resources :users, only: [:index, :show] do
+    resources :conversations, :controller => "user_conversations"
+  end
 
   resource :analysis, only: [:create]
   root to: "pages#home"
@@ -15,6 +17,17 @@ Rails.application.routes.draw do
   resource :variations, only: [:create]
 
   resources :invitations, only: [:create, :show]
+
+  resources :conversations, :controller => "user_conversations" do
+    resources :messages
+    member do
+      post :mark_as_read
+      post :mark_as_unread
+    end
+  end
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,7 @@
+.index-messages-container {
+  border: red 1px dotted;
+}
+
+.index-message {
+  list-style-type: none;
+}

@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  author_id: 1
+  user_id: 1
   conversation_id: 1
-  body: MyText
+  deleted: false
+  read: false
 
 two:
-  author_id: 1
+  user_id: 1
   conversation_id: 1
-  body: MyText
+  deleted: false
+  read: false

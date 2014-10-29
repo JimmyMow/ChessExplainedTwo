@@ -1,0 +1,18 @@
+<h1><%= @conversation.subject %></h1>
+
+<div>
+  <h2>People in this conversation:</h2>
+  <ul>
+    <% for user in @conversation.users do %>
+      <li><%= link_to user.name, user %></li>
+    <% end %>
+  </ul>
+</div>
+
+<% @conversation.messages.each do |message| %>
+  <div class="message"><%= time_ago_in_words(message.created_at) %> ago, <%= message.user.name %> wrote:
+    <div class="message_body"><%= message.body %></div>
+  </div>
+<% end %>
+
+

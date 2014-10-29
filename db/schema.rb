@@ -11,14 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028012045) do
+ActiveRecord::Schema.define(version: 20141029220827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "conversations", force: true do |t|
-    t.integer  "user_one_id"
-    t.integer  "user_two_id"
+    t.string   "subject"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -51,12 +50,11 @@ ActiveRecord::Schema.define(version: 20141028012045) do
   end
 
   create_table "messages", force: true do |t|
-    t.integer  "sender_id"
-    t.integer  "recipient_id"
-    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "conversation_id"
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "conversation_id"
   end
 
   create_table "moves", force: true do |t|
@@ -80,6 +78,15 @@ ActiveRecord::Schema.define(version: 20141028012045) do
     t.integer  "creator_id"
     t.string   "sessionId"
     t.boolean  "public"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_conversations", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "conversation_id"
+    t.boolean  "deleted"
+    t.boolean  "read"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
