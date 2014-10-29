@@ -1,0 +1,8 @@
+$('#user-games').append("<%= j render('users_games', games: @games) %>");
+<% if @games.next_page %>
+  $('.pagination').replaceWith('<%= j will_paginate(@games) %>');
+<% else %>
+  $('.pagination').remove();
+<% end %>
+
+setUpUsersGamesBoard();

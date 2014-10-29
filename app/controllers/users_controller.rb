@@ -6,7 +6,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    @games = @user.games.order("created_at DESC").limit(5)
+    @games = @user.games.order("created_at DESC").paginate(page: params[:page], per_page: 5)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   private

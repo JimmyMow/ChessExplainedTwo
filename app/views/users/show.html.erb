@@ -15,37 +15,9 @@
     </div>
   </div>
 
-  <ul class="show-user-games">
-    <% @games.each do |game| %>
-      <%= link_to(review_game_url(game.id), class: "clearfix") do %>
-        <li class="show-user-game col-sm-12">
-          <div class="user-show-board col-sm-3" id="board_<%= game.id %>" data-fen="<%= game.moves.last.fen %>" data-id="<%= game.id %>">
-          </div>
-
-          <div class="user-show-game-details col-sm-9">
-            <div class="show-user-game-title white_player col-sm-4 col-sm-offset-1">
-              <%= game.white_player %>
-              <br>
-              <span class="rating"><%= convert_rating(game.white_rating) %></span>
-            </div>
-            <span class="show-user-game-vs text-muted col-sm-1 text-center">vs.</span>
-            <div class="show-user-game-title black_player col-sm-4">
-              <%= game.black_player %>
-              <br>
-              <span class="rating"><%= convert_rating(game.black_rating) %></span>
-            </div>
-
-
-            <p class="show-user-game-result text-center col-sm-11">
-              <%= game.result %>
-            </p>
-
-            <p class="user-show-game-move-summary col-sm-11 text-center">
-              <%= game.pgn.truncate(30) %> <%= game.moves.count %> moves
-            </p>
-          </div>
-        </li>
-      <% end %>
-    <% end %>
+  <ul class="show-user-games" id="user-games">
+    <%= render 'users_games', games: @games %>
   </ul>
+
+  <%= will_paginate @games %>
 </div>

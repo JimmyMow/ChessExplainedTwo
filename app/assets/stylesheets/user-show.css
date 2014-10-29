@@ -62,3 +62,12 @@
   margin-top: 50px;
   color: #47525d;
 }
+
+.pagination {
+  text-align: center;
+  display: block;
+}
+
+.user-show-game-uploaded-at {
+  color: #47525d;
+}

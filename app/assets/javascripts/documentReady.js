@@ -14,6 +14,7 @@ $(document).ready(function() {
   // Users show page
   if(App.config.isUserShow) {
     setUpUsersGamesBoard();
+    unlimitedScroll();
   }
 
 
