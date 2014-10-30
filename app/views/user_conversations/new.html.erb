@@ -2,11 +2,9 @@
 
 <%= form_for(@conversation) do |f| %>
   <div>
-    <%= f.label :to %><br />
-    <% for user in User.all do %>
-      <% next if user == current_user %>
-      <%= check_box_tag "user_conversation[to][]", user.id %> <%= user.name %><br />
-    <% end %>
+    <%= f.label :to, "To:" %>
+    <%= text_field_tag :user_autocomplete, nil, placeholder: "Handle", id: "user_autocomplete" %>
+    <%= f.hidden_field :to, placeholder: "Handle", name: "user_conversation[to][]" %>
   </div>
   <%= f.fields_for :conversation do |c| %>
     <div>

@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
   has_many :conversations, through: :user_conversations
   has_many :messages, through: :conversations
 
+  def self.terms_for(prefix)
+    suggestions = User.where("handle ILIKE :search", search: "%#{prefix.downcase}%" )
+    suggestions.order("handle ASC").limit(10)
+  end
+
   def is_game_owner?(game)
     game.creator_id == self.id
   end

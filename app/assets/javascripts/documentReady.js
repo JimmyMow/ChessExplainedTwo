@@ -5,6 +5,11 @@ $(document).ready(function() {
   userBindEvents();
   signUpValidation("new_user");
 
+  // New conversation
+  if(App.config.isNewConversation) {
+    userAutocompletion();
+  }
+
   // GAME/NEW
   if (App.config.isNewGame) {
     regualarPgnUpload();

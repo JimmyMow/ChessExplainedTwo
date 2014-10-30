@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-
+  # Autocomplete user message route
+  get "/search_suggestions" => "search_suggestions#index", as: :search_suggestions
+  # Manually uploading games route
   get "/games/manual_upload" => "games#manual", as: :manual_upload
 
   resources :games, except: [:index] do
@@ -18,13 +20,13 @@ Rails.application.routes.draw do
 
   resources :invitations, only: [:create, :show]
 
-  resources :conversations, :controller => "user_conversations" do
-    resources :messages
-    member do
-      post :mark_as_read
-      post :mark_as_unread
-    end
-  end
+  # resources :conversations, :controller => "user_conversations" do
+  #   resources :messages
+  #   member do
+  #     post :mark_as_read
+  #     post :mark_as_unread
+  #   end
+  # end
 
 
 
