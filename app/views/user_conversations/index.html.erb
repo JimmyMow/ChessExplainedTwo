@@ -1,13 +1,32 @@
 <div class="container">
-  <h1>Inbox</h1>
+  <div class="conversation-index-header">
+    <h3>Inbox</h3>
+    <%= link_to "Create a new conversation", new_user_conversation_path(@user), class: "btn btn-success" %>
+  </div>
 
-  <ul class="index-messages-container">
-    <% @conversations.each do |conversation|  %>
-      <li class="index-message">
-        <%= link_to conversation.subject, user_conversation_url(conversation.user, conversation) %>
-      </li>
-    <% end %>
-  </ul>
-
-  <%= link_to "Create a New Conversation", new_user_conversation_path(@user) %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>People</th>
+        <th>Last updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @conversations.each do |conversation|  %>
+        <tr>
+          <td class="subject convo-content">
+            <%= link_to conversation.subject, user_conversation_url(conversation.user, conversation) %>
+          </td>
+          <td class="author convo-content">
+            <%= conversation.users.map(&:handle).join(", ") %>
+          </td>
+          <td class="date convo-content">
+            <time class="" datetime="2014-10-29T21:01:23.788+01:00" data-format="calendar"><%= conversation.updated_at.strftime("%b %e, %l:%M %p") %></time>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
+

@@ -1,7 +1,15 @@
+.conversation-index-header {
+  margin: 40px 0;
+}
+
 .index-messages-container {
   border: red 1px dotted;
 }
 
 .index-message {
   list-style-type: none;
+}
+
+.convo-content {
+  font-size: 14px;
 }
