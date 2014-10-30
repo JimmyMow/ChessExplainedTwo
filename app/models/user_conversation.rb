@@ -11,6 +11,10 @@ class UserConversation < ActiveRecord::Base
   attr_accessor :to
   before_create :create_user_conversations
 
+  def users_that_are_not_me(user_id)
+    return self.users.where.not(id: user_id)
+  end
+
   private
 
   def create_user_conversations
@@ -20,4 +24,5 @@ class UserConversation < ActiveRecord::Base
       UserConversation.create :user_id => recip, :conversation => conversation
     end
   end
+
 end

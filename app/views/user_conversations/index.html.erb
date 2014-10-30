@@ -19,7 +19,7 @@
             <%= link_to conversation.subject, user_conversation_url(conversation.user, conversation) %>
           </td>
           <td class="author convo-content">
-            <%= conversation.users.map(&:handle).join(", ") %>
+            <%= conversation.users_that_are_not_me(current_user.id).pluck(:handle).join(", ") %>
           </td>
           <td class="date convo-content">
             <time class="" datetime="2014-10-29T21:01:23.788+01:00" data-format="calendar"><%= conversation.updated_at.strftime("%b %e, %l:%M %p") %></time>
