@@ -442,7 +442,7 @@ function expandConfig() {
   if (cfg.hasOwnProperty('pieceTheme') !== true ||
       (typeof cfg.pieceTheme !== 'string' &&
        typeof cfg.pieceTheme !== 'function')) {
-    cfg.pieceTheme = "http://chess-explained.s3.amazonaws.com/{piece}.png";
+    cfg.pieceTheme = "https://chess-explained.s3.amazonaws.com/{piece}.png";
   }
 
   // animation speeds
