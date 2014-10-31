@@ -18,7 +18,7 @@
     <ul class="nav navbar-nav navbar-right">
       <li class="<%= 'active' if current_page?(user_conversations_url(params[:user_id] || 1)) %>">
       <%= link_to user_conversations_url(user_id: current_user.id) do %>
-        <i class="fa fa-envelope-o"></i>
+        <i class="fa fa-envelope-o <%= current_user.unread_messages.any? ? 'unread_messages' : '' %>"></i>
         <% if current_user.unread_messages.any? %>
           <span class="badge alert-danger unread_messages"><%= current_user.unread_messages.count %></span>
         <% end %>
