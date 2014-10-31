@@ -9,8 +9,12 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, controllers: { sessions: "sessions", registrations: "registrations" }
+
   resources :users, only: [:index, :show] do
-    resources :conversations, :controller => "user_conversations"
+    resources :conversations, :controller => "user_conversations" do
+      member { post :mark_as_read }
+      resources :messages, only: [:create]
+    end
   end
 
   resource :analysis, only: [:create]

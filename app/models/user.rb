@@ -32,4 +32,8 @@ class User < ActiveRecord::Base
     self.is_online = false
     self.save
   end
+
+  def unread_messages
+    self.user_conversations.where.not(read: true)
+  end
 end

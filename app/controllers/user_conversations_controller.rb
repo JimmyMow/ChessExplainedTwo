@@ -1,15 +1,18 @@
 class UserConversationsController < ApplicationController
   before_action :set_conversation, only: [:show]
   before_action :check_for_present_user, only: [:new, :create]
-  before_action :check_for_correct_user, only: [:index, :new, :create]
+  before_action :check_for_correct_user, only: [:index, :new, :create, :show]
 
   def index
     @user = User.find params[:user_id]
-    @conversations = @user.user_conversations
+    @conversations = @user.user_conversations.order("updated_at DESC")
   end
 
   def show
+    @message = Message.new
+    @messages = @conversation.messages.order("created_at ASC")
 
+    @conversation.update_attributes(read: true)
   end
 
   def new
@@ -22,21 +25,25 @@ class UserConversationsController < ApplicationController
     @conversation = UserConversation.new(user_conversation_params)
     @conversation.user = current_user
     @conversation.conversation.messages.first.user = current_user
-    @conversation.save!
-    redirect_to user_conversation_path(current_user, @conversation)
+
+    respond_to do |format|
+      if @conversation.save
+        format.html { redirect_to user_conversation_path(current_user, @conversation) }
+      else
+        format.html { redirect_to :back, alert: "#{@conversation.errors.full_messages.join(", ")}" }
+      end
+    end
   end
 
-  def mark_as_read
-    @conversation = UserConversation.find params[:id]
-    @conversation.update_attributes :read => true
-    redirect_to user_conversation_path(current_user, @conversation)
-  end
+  # def mark_as_read
+  #   @conversation = UserConversation.find(params[:id])
+  #   @conversation.update_attributes(read: true)
 
-  def mark_as_unread
-    @conversation = UserConversation.find params[:id]
-    @conversation.update_attributes :read => false
-    redirect_to user_conversation_path(current_user, @conversation)
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to user_conversation_path(current_user, @conversation) }
+  #     format.js
+  #   end
+  # end
 
   private
 

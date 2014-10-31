@@ -5,6 +5,11 @@ $(document).ready(function() {
   userBindEvents();
   signUpValidation("new_user");
 
+  // Show conversation
+  if(App.config.isConversation) {
+    goToBottom();
+  }
+
   // New conversation
   if(App.config.isNewConversation) {
     userAutocompletion();

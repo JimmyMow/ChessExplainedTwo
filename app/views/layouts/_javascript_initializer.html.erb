@@ -17,6 +17,7 @@
     isNewGame: <%= current_page?(new_game_url) %>,
     isUserShow: <%= current_page?(user_url(params[:id] || 1)) %>,
     isNewConversation: <%= current_page?(new_user_conversation_url(params[:user_id] || 1)) %>,
+    isConversation: <%= current_page?(user_conversation_url(user_id: params[:user_id] || 1, id: params[:id] || 1)) %>,
     channelName: channelNameVar
   }
 </script>

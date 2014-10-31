@@ -13,3 +13,7 @@
 .convo-content {
   font-size: 14px;
 }
+
+.not-read {
+  font-weight: bold;
+}

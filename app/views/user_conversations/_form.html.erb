@@ -1,0 +1,33 @@
+<%= form_for(@conversation, html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <div class="form-group">
+    <%= f.label :to, "To:", class: "col-sm-2 control-label" %>
+    <div class="col-sm-8">
+      <%= text_field_tag :user_autocomplete, nil, placeholder: "Search users by their handle", id: "user_autocomplete", class: "form-control" %>
+      <%= f.hidden_field :to, placeholder: "Handle", name: "user_conversation[to][]" %>
+    </div>
+  </div>
+
+  <%= f.fields_for :conversation do |c| %>
+    <div class="form-group">
+      <%= c.label :subject, "Subject:", class: "col-sm-2 control-label" %>
+      <div class="col-sm-8">
+        <%= c.text_field :subject, placeholder: "Subject", class: "form-control" %>
+      </div>
+    </div>
+
+    <%= c.fields_for :messages do |m| %>
+      <div class="form-group">
+        <%= m.label :body, "Message:", class: "col-sm-2 control-label" %>
+        <div class="col-sm-8">
+          <%= m.text_area :body, class: "form-control", rows: 5, placeholder: "Write a message..." %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-8">
+      <%= f.button "Send", class: "btn btn-primary pull-right", data: { disable_with: "<i class=\"fa fa-spinner fa-spin\"></i> Loading..." } %>
+    </div>
+  </div>
+<% end %>

@@ -1,21 +1,21 @@
 <div class="container">
   <div class="conversation-index-header">
     <h3>Inbox</h3>
-    <%= link_to "Create a new conversation", new_user_conversation_path(@user), class: "btn btn-success" %>
+    <%= link_to "Start a new conversation", new_user_conversation_path(@user), class: "btn btn-success" %>
   </div>
 
-  <table class="table table-striped">
+  <table class="table">
     <thead>
       <tr>
-        <th>Subject</th>
-        <th>People</th>
+        <th>Conversation subject</th>
+        <th>People in conversation</th>
         <th>Last updated</th>
       </tr>
     </thead>
     <tbody>
       <% @conversations.each do |conversation|  %>
-        <tr>
-          <td class="subject convo-content">
+        <tr class="<%= conversation.read ? '' : 'active'  %>">
+          <td class="subject convo-content <%= conversation.read ? 'read' : 'not-read'  %>">
             <%= link_to conversation.subject, user_conversation_url(conversation.user, conversation) %>
           </td>
           <td class="author convo-content">

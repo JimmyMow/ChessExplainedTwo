@@ -1,18 +1,34 @@
-<h1><%= @conversation.subject %></h1>
+<div class="message-container">
+  <div class="conversation-show-header">
+    <h2><%= @conversation.subject %></h2>
+  </div>
 
-<div>
-  <h2>People in this conversation:</h2>
-  <ul>
-    <% for user in @conversation.users do %>
-      <li><%= link_to user.name, user %></li>
-    <% end %>
-  </ul>
+  <% @messages.each do |message| %>
+    <div class="message">
+      <p class="message_user">
+        <span class="message_username">
+          <i class="fa fa-user <%= 'online' if message.user.is_online %>"></i> <%= message.user.handle %>
+        </span>
+        <span class="message_time">
+          <%= message.created_at.strftime("%b %e, %l:%M %p") %>
+        </span>
+      </p>
+
+      <p class="message_body">
+        <%= message.body %>
+      </p>
+    </div>
+
+  <% end %>
+
+  <div class="message_form_container">
+    <%= render "messages/form" %>
+  </div>
 </div>
 
-<% @conversation.messages.each do |message| %>
-  <div class="message"><%= time_ago_in_words(message.created_at) %> ago, <%= message.user.name %> wrote:
-    <div class="message_body"><%= message.body %></div>
-  </div>
+<%= content_for :head do %>
+  <script type="text/javascript">
+    var markAsReadUrl = "<%= mark_as_read_user_conversation_url(user_id: @conversation.user, id: @conversation) %>"
+  </script>
 <% end %>
-
 

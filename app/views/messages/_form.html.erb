@@ -1,0 +1,9 @@
+<div id="bottom">
+  <%= form_for(@message, url: user_conversation_messages_path(conversation_id: @conversation.conversation.id, id: @message.id, user_conversation_id: @conversation.id)) do |f| %>
+    <%= f.text_area :body, placeholder: "Write a reply...", class: "message_reply form-control", rows: 5 %>
+    <%= f.hidden_field :conversation_id, value: @conversation.conversation.id %>
+    <div class="message_reply_button_container">
+      <%= f.button "Send", class: "btn btn-primary", data: { disable_with: "<i class=\"fa fa-spinner fa-spin\"></i> Loading..." } %>
+    </div>
+  <% end %>
+</div>

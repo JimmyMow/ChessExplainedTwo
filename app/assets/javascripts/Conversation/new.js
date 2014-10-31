@@ -5,7 +5,12 @@ var userAutocompletion = function() {
       $( "#user_conversation_to" ).val(ui.item.id);
     },
     change: function (event, ui) {
-      $( "#user_conversation_to" ).val(ui.item.id);
+      if(ui.item) {
+        $( "#user_conversation_to" ).val(ui.item.id);
+      } else {
+        $( "#user_conversation_to" ).val("");
+      }
+
     }
   });
 };
