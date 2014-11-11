@@ -58,7 +58,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new
     @game.creator_id = current_user.id
-    @game.create_details(params[:game][:details]) if params[:game][:deatils]
+    @game.create_details(params[:game][:details])
 
     config_opentok
     @game.sessionId = @opentok.create_session.session_id

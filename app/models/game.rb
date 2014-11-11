@@ -16,6 +16,7 @@ class Game < ActiveRecord::Base
 
   def create_details(details_array)
     game_details = JSON.parse(details_array)
+    return if game_details.nil?
     self.pgn = game_details["pgn"]
 
     self.white_player = game_details["White"]
