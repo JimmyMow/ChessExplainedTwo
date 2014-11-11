@@ -22,9 +22,11 @@
           <%= game.result %>
         </p>
 
-        <p class="user-show-game-move-summary col-sm-11 text-center">
-          <%= game.pgn.truncate(30) %> <%= game.moves.count %> moves
-        </p>
+        <% if game.pgn.present? %>
+          <p class="user-show-game-move-summary col-sm-11 text-center">
+            <%= game.pgn.truncate(30) %> <%= game.moves.count %> moves
+          </p>
+        <% end %>
         <p class="user-show-game-uploaded-at col-sm-11 text-center">
           Uploaded on <%= game.created_at.strftime("%b %d, %Y") %>
         </p>
