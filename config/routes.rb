@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "/announcement" => "pages#announcement"
   # Autocomplete user message route
   get "/search_suggestions" => "search_suggestions#index", as: :search_suggestions
   # Manually uploading games route
