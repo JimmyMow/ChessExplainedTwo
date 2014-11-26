@@ -1,3 +1,7 @@
+.announcement-link {
+  display: inline-block;
+}
+
 .divider {
   margin: 25px 0;
   border: 0;
@@ -10,6 +14,10 @@
 
 .right {
   float: right;
+}
+
+.left {
+  float: left;
 }
 
 nav > ul {

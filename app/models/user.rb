@@ -34,6 +34,6 @@ class User < ActiveRecord::Base
   end
 
   def unread_messages
-    self.user_conversations.where.not(read: true)
+    self.user_conversations.where(read: [nil, false])
   end
 end
