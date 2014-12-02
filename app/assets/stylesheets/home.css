@@ -1,5 +1,11 @@
 .announcement-link {
-  display: inline-block;
+  /*display: inline-block;*/
+  font-size: 22px;
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  font-style: italic;
+  /*text-decoration: underline;*/
 }
 
 .divider {
@@ -38,7 +44,7 @@ nav > ul > li > a {
 
 /*Intro*/
 .intro {
-
+  position: relative;
 }
 
 .intro-titles {
